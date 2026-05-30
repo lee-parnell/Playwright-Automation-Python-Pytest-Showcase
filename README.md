@@ -1,6 +1,6 @@
-# Playwright Python and Pytest for Web Automation Testing
+# Playwright Automation with Python and Pytest
 
-A comprehensive guide to test automation using **Playwright**, **Python**, and **Pytest**. This repository covers everything from basic setup to advanced testing techniques including UI automation, API testing, and continuous integration.
+A comprehensive hands-on automation project demonstrating **Playwright**, **Python**, and **Pytest** for browser automation, UI testing, API testing, Page Object Model design, fixtures, data-driven testing, behavior-driven testing, debugging tools, optimization, and CI-oriented test execution.
 
 **Written by Brian McCarthy**
 
@@ -9,995 +9,972 @@ A comprehensive guide to test automation using **Playwright**, **Python**, and *
 ## Table of Contents
 
 - [Project Overview](#project-overview)
-- [Languages & Technologies](#languages--technologies)
-- [Project Methodologies](#project-methodologies)
+- [Repository Goals](#repository-goals)
+- [Languages Used](#languages-used)
+- [Technologies and Frameworks](#technologies-and-frameworks)
+- [Methodologies Used](#methodologies-used)
 - [File Structure](#file-structure)
-- [Core Concepts & Code Examples](#core-concepts--code-examples)
-  - [Basic Test Structure](#basic-test-structure)
-  - [Page Object Model (POM)](#page-object-model-pom)
-  - [Web-First Assertions](#web-first-assertions)
-  - [Pytest Fixtures](#pytest-fixtures)
-  - [API Testing](#api-testing)
-  - [Data-Driven Testing](#data-driven-testing)
-  - [Behavior Driven Development (BDD)](#behavior-driven-development-bdd)
-- [API Testing Guide & Tutorial](#api-testing-guide--tutorial)
-- [Tips & Best Practices](#tips--best-practices)
-- [Getting Started](#getting-started)
-- [Project Functions Overview](#project-functions-overview)
+- [Project File Links](#project-file-links)
+- [How the Project Works](#how-the-project-works)
+- [Core Functions and Patterns](#core-functions-and-patterns)
+- [Code Methodology Summary](#code-methodology-summary)
+- [Sample Code from This Project](#sample-code-from-this-project)
+  - [Basic Playwright Page Fixture Test](#basic-playwright-page-fixture-test)
+  - [Page Object Model Login Page](#page-object-model-login-page)
+  - [Page Object Model Test Case](#page-object-model-test-case)
+  - [API Context Fixture](#api-context-fixture)
+  - [API CRUD Tests](#api-crud-tests)
+  - [Data-Driven Test with Pytest Parametrize](#data-driven-test-with-pytest-parametrize)
+  - [Behavior-Driven Test Steps](#behavior-driven-test-steps)
+  - [Behavior Test Environment Hooks](#behavior-test-environment-hooks)
+  - [CI-Ready UI Test Example](#ci-ready-ui-test-example)
+- [Playwright Pytest Tutorial and Guide](#playwright-pytest-tutorial-and-guide)
+- [Common Commands](#common-commands)
+- [Recommended Setup](#recommended-setup)
+- [Testing Strategy](#testing-strategy)
+- [Best Practices and Tips](#best-practices-and-tips)
+- [Troubleshooting Guide](#troubleshooting-guide)
+- [Suggested Improvements](#suggested-improvements)
+- [Author](#author)
 
 ---
 
 ## Project Overview
 
-This project demonstrates end-to-end test automation strategies using Playwright for both UI and API testing. It includes 21 comprehensive sections covering topics from basic locators to advanced CI/CD integration.
+This repository is a learning and portfolio project for modern test automation using **Playwright for Python** with **Pytest**. It demonstrates how to automate browser workflows, validate UI behavior, test REST APIs, use fixtures, organize reusable page objects, parameterize test data, handle BDD-style scenarios, and prepare tests for repeatable execution.
+
+The repository is organized into numbered sections, with each section focusing on a major automation topic:
+
+- Playwright setup and browser basics
+- Locator strategies
+- Browser events
+- Authentication workflows
+- Automated mail checking
+- Pytest fundamentals
+- `pytest-playwright` plugin usage
+- Playwright debugging tools
+- Web-first assertions
+- UI Testing Playground examples
+- Playwright fixtures
+- Page Object Model
+- API testing
+- Optimization techniques
+- GitHub API testing
+- CI-oriented testing
+- Data-driven testing
+- Behavior-driven development
 
 ---
 
-## Languages & Technologies
+## Repository Goals
 
-| Technology | Version | Percentage |
-|------------|---------|------------|
-| **Python** | 3.x | 94.7% |
-| **HTML** | - | 5.3% |
+The project is designed to show practical automation skills in the following areas:
 
-### Key Libraries & Frameworks
-
-- **Playwright** - Cross-browser automation framework
-- **Pytest** - Python testing framework with fixtures and plugins
-- **pytest-playwright** - Pytest plugin for Playwright integration
-- **pytest-bdd** - Behavior Driven Development support
-- **Requests** - HTTP library for API testing
+1. Build automated UI tests with Python and Playwright.
+2. Use Pytest as the test runner and assertion organizer.
+3. Apply reliable locator strategies such as role, placeholder, CSS, and text locators.
+4. Use Playwright web-first assertions to reduce flaky waits.
+5. Separate test logic from page interaction logic using the Page Object Model.
+6. Create reusable Pytest fixtures for setup, teardown, and API contexts.
+7. Automate REST API validation using Playwright request contexts.
+8. Run the same test logic against multiple data sets using `pytest.mark.parametrize`.
+9. Demonstrate behavior-style test steps with `behave` and Playwright.
+10. Prepare tests so they can be run locally or inside a CI workflow.
 
 ---
 
-## Project Methodologies
+## Languages Used
 
-### 1. **Page Object Model (POM)**
-Encapsulates web page elements and actions into reusable classes, improving maintainability and reducing code duplication.
+| Language | Purpose |
+|---|---|
+| Python | Main automation, test cases, fixtures, API tests, Page Object Model classes, BDD step definitions |
+| HTML | Sample/static pages or UI content used by some examples |
+| Gherkin-style BDD text | Behavior-driven scenario wording used with Behave-style step definitions |
+| YAML / CI concepts | CI-oriented automation concepts in the continuous integration section |
 
-### 2. **Test-Driven Development (TDD)**
-Write tests first, then implement functionality to pass those tests.
+---
 
-### 3. **Data-Driven Testing**
-Parameterize tests to run with multiple data sets, maximizing test coverage.
+## Technologies and Frameworks
 
-### 4. **Behavior-Driven Development (BDD)**
-Write tests in plain language using Gherkin syntax that bridges business and technical teams.
+| Technology | Used For |
+|---|---|
+| Playwright for Python | Browser automation, UI testing, assertions, API request contexts |
+| Pytest | Test discovery, test execution, fixtures, parametrization, reporting |
+| pytest-playwright | Built-in Playwright fixtures such as `page`, `browser`, `context`, and browser CLI options |
+| Behave | BDD-style step definitions and scenario hooks |
+| Python `requests` / Playwright APIRequestContext concepts | REST API validation patterns |
+| GitHub API | API testing practice using authenticated API context fixtures |
+| UI Testing Playground | Practice site for dynamic IDs, hidden layers, load delays, scrollbars, client-side delays, and other real UI automation challenges |
 
-### 5. **Fixture-Based Testing**
-Use Pytest fixtures for setup, teardown, and dependency injection.
+---
 
-### 6. **Web-First Assertions**
-Assertions that automatically wait for conditions to be true, increasing test reliability.
+## Methodologies Used
 
-### 7. **API-First Testing**
-Test backend APIs before UI to catch issues early.
+### 1. Functional UI Automation
 
-### 8. **Continuous Integration (CI)**
-Automated test execution in pipelines using GitHub Actions.
+Tests simulate real user actions such as opening a page, filling fields, clicking buttons, hovering, waiting for UI changes, and validating results.
+
+### 2. Page Object Model
+
+The Page Object Model separates page structure and page actions from test assertions. This makes tests easier to maintain because locators and common actions are centralized in page classes instead of duplicated across test files.
+
+### 3. Fixture-Based Test Design
+
+Pytest fixtures manage browser pages, API clients, setup work, teardown work, and reusable dependencies. This keeps test methods short and improves repeatability.
+
+### 4. Web-First Assertions
+
+Playwright assertions such as `expect(locator).to_have_text()` automatically wait for the expected condition before failing. This reduces the need for manual sleeps and lowers test flakiness.
+
+### 5. API-First Validation
+
+The API testing section validates backend behavior directly through HTTP methods such as GET, POST, PUT, and DELETE. This helps catch service-level problems before UI workflows are tested.
+
+### 6. Data-Driven Testing
+
+Pytest parametrization runs the same test logic against multiple data combinations. This improves coverage without duplicating test functions.
+
+### 7. Behavior-Driven Development
+
+The BDD section uses human-readable step definitions such as `given`, `when`, and `then` to describe behavior in business-friendly language.
+
+### 8. CI-Oriented Testing
+
+The continuous integration section includes tests structured for repeatable command-line execution. These tests can be connected to a GitHub Actions workflow or another CI pipeline.
 
 ---
 
 ## File Structure
 
-```
+```text
 Playwright-Automation-Python-Pytest/
-│
-├── S01 - Getting Started/              # Introduction and setup
-├── S02 - Locators/                    # Element locator strategies (CSS, XPath, role-based)
-├── S04 - Events/                      # Event handling and listeners
-├── S05 - Authentication/              # Login, session management
-├── S06 - Automated Mail Checker/      # Email automation testing
-├── S07 - pytest/                      # Pytest fundamentals
-├── S08 - pytest-playwright Plugin/    # Pytest-Playwright plugin usage
-├── S09 - Playwright Tools/            # Inspector, codegen, trace viewer
-├── S10 - Web-First Assertions/        # Expect library and assertions
-├── S11 - UI Testing Playground/       # Real-world UI test examples
-├── S12 - Playwright Fixtures/         # Custom fixtures for tests
-├── S13 - Page Object Model/           # POM design pattern implementation
-├── S15 - API Testing/                 # REST API testing with Playwright
-├── S16 - Optimization/                # Performance and optimization tips
-├── S17 - Tips and Tricks/             # Best practices and workarounds
-├── S18 - GitHub API/                  # Testing GitHub REST API
-├── S19 - Continuous Integration/      # GitHub Actions workflows
-├── S20 - Data Driven Testing/         # Parameterized tests
-├── S21 - Behaviour Driven Development/# BDD with pytest-bdd
-│
-└── README.md                           # This file
+├── S01 - Getting Started/                  # Playwright setup and first scripts
+├── S02 - Locators/                         # Locator strategy examples
+├── S04 - Events/                           # Browser and page event handling
+├── S05 - Authentication/                   # Authentication and login examples
+├── S06 - Automated Mail Checker/           # Mail-checking automation examples
+├── S07 - pytest/                           # Pytest basics and reporting examples
+├── S08 - pytest-playwright Plugin/         # pytest-playwright plugin examples
+├── S09 - Playwright Tools/                 # Video, trace, inspector, debugging examples
+├── S10 - Web-First Assertions/             # Page, text, attribute, input, checkbox assertions
+├── S11 - UI Testing Playground/            # Real-world UI automation practice problems
+├── S12 - Playwright Fixtures/              # Fixture and argument examples
+├── S13 - Page Object Model/                # Page classes and tests using POM
+├── S15 - API Testing/                      # REST API tests using Playwright request context
+├── S16 - Optimization/                     # Resource blocking and performance optimization
+├── S17 - Tips and Tricks/                  # Useful Playwright/Pytest techniques
+├── S18 - GitHub API/                       # Authenticated GitHub API tests
+├── S19 - Continuous Integration/           # CI-ready app tests
+├── S20 - Data Driven Testing/              # Parametrized Pytest tests
+├── S21 - Behaviour Driven Development/     # Behave + Playwright step definitions
+└── README.md                               # Project documentation
 ```
 
 ---
 
-## Core Concepts & Code Examples
+## Project File Links
 
-### Basic Test Structure
+### Main Repository Sections
 
-#### Simple Test Example:
+- [S01 - Getting Started](S01%20-%20Getting%20Started/)
+- [S02 - Locators](S02%20-%20Locators/)
+- [S04 - Events](S04%20-%20Events/)
+- [S05 - Authentication](S05%20-%20Authentication/)
+- [S06 - Automated Mail Checker](S06%20-%20Automated%20Mail%20Checker/)
+- [S07 - pytest](S07%20-%20pytest/)
+- [S08 - pytest-playwright Plugin](S08%20-%20pytest-playwright%20Plugin/)
+- [S09 - Playwright Tools](S09%20-%20Playwright%20Tools/)
+- [S10 - Web-First Assertions](S10%20-%20Web-First%20Assertions/)
+- [S11 - UI Testing Playground](S11%20-%20UI%20Testing%20Playground/)
+- [S12 - Playwright Fixtures](S12%20-%20Playwright%20Fixtures/)
+- [S13 - Page Object Model](S13%20-%20Page%20Object%20Model/)
+- [S15 - API Testing](S15%20-%20API%20Testing/)
+- [S16 - Optimization](S16%20-%20Optimization/)
+- [S17 - Tips and Tricks](S17%20-%20Tips%20and%20Tricks/)
+- [S18 - GitHub API](S18%20-%20GitHub%20API/)
+- [S19 - Continuous Integration](S19%20-%20Continuous%20Integration/)
+- [S20 - Data Driven Testing](S20%20-%20Data%20Driven%20Testing/)
+- [S21 - Behaviour Driven Development](S21%20-%20Behaviour%20Driven%20Development/)
+
+### Key Project Files
+
+- [Login Page Object](S13%20-%20Page%20Object%20Model/87-login_page.py)
+- [Login Page Object Tests](S13%20-%20Page%20Object%20Model/88-test_app.py.py)
+- [Playwright Documentation Page Object](S13%20-%20Page%20Object%20Model/89-playwright_page.py)
+- [Playwright Documentation Tests](S13%20-%20Page%20Object%20Model/90-test_app.py)
+- [Basic API Test](S15%20-%20API%20Testing/95-test_api_context.py)
+- [API Method Tests](S15%20-%20API%20Testing/97-test_methods.py)
+- [API Mock Test](S15%20-%20API%20Testing/98-test_mock.py)
+- [GitHub API Fixture](S18%20-%20GitHub%20API/109-conftest.py)
+- [CI Example Test](S19%20-%20Continuous%20Integration/114-test_cubeit.py)
+- [Data-Driven Root Test](S20%20-%20Data%20Driven%20Testing/118-test_root.py)
+- [BDD Environment Hooks](S21%20-%20Behaviour%20Driven%20Development/123-environment.py)
+- [BDD Login Steps](S21%20-%20Behaviour%20Driven%20Development/123-login.py)
+
+---
+
+## How the Project Works
+
+At a high level, this repository follows this automation flow:
+
+1. **Pytest discovers test files** named with `test_` or containing test functions named `test_*`.
+2. **Playwright opens a browser page** using the `page` fixture from `pytest-playwright` or a manually created browser/page fixture.
+3. **The test navigates to an application or API endpoint** using `page.goto()` for UI flows or `api_context.get()`, `post()`, `put()`, and `delete()` for API flows.
+4. **Locators identify page elements** using role, placeholder, CSS, text, or other locator strategies.
+5. **Actions simulate user behavior** such as `fill()`, `click()`, `hover()`, keyboard input, and page navigation.
+6. **Assertions validate outcomes** using Playwright `expect()` or Python `assert` statements.
+7. **Fixtures handle reusable setup and teardown** such as API clients, browser instances, and test data.
+8. **Page Object Model classes hide locator details** so test files can focus on business behavior.
+9. **Parametrized tests repeat the same scenario with multiple data inputs**.
+10. **BDD step definitions describe behavior in Given/When/Then style** for readable acceptance scenarios.
+
+---
+
+## Core Functions and Patterns
+
+| Function / Pattern | Purpose |
+|---|---|
+| `page.goto(url)` | Opens a browser page or endpoint |
+| `page.get_by_role()` | Finds elements by accessible role and name |
+| `page.get_by_placeholder()` | Finds input fields by placeholder text |
+| `page.locator()` | Finds elements using CSS or other selector syntax |
+| `locator.fill()` | Enters text into an input field |
+| `locator.click()` | Clicks a button, link, or element |
+| `expect(locator).to_have_text()` | Waits for text and validates it |
+| `expect(page).to_have_url()` | Verifies final page URL after navigation |
+| `playwright.request.new_context()` | Creates an API client for REST testing |
+| `api_context.get()` | Sends a GET request |
+| `api_context.post()` | Sends a POST request |
+| `api_context.put()` | Sends a PUT request |
+| `api_context.delete()` | Sends a DELETE request |
+| `pytest.fixture` | Creates reusable setup/teardown resources |
+| `pytest.mark.parametrize` | Runs one test against multiple data rows |
+| `before_scenario()` | Behave hook that runs before each scenario |
+| `after_scenario()` | Behave hook that runs after each scenario |
+
+---
+
+## Code Methodology Summary
+
+The code is organized as a progressive automation course. Early sections focus on Playwright fundamentals such as navigation and locators. Later sections introduce Pytest, then add more maintainable testing patterns such as fixtures and Page Object Model classes. API testing expands coverage beyond the browser, while data-driven and behavior-driven sections demonstrate scalable ways to increase test coverage and readability.
+
+The strongest methodology examples in the project are:
+
+- **Reusable page classes** in `S13 - Page Object Model`
+- **Reusable API request contexts** in `S15 - API Testing` and `S18 - GitHub API`
+- **Parametrized test data** in `S20 - Data Driven Testing`
+- **BDD Given/When/Then step functions** in `S21 - Behaviour Driven Development`
+- **CI-friendly tests** in `S19 - Continuous Integration`
+
+---
+
+## Sample Code from This Project
+
+### Basic Playwright Page Fixture Test
+
+A typical Playwright/Pytest test accepts a `page: Page` fixture, navigates to a URL, interacts with locators, and validates the result.
+
 ```python
 from playwright.sync_api import Page, expect
 
-def test_example_com(page: Page):
-    # Navigate to website
-    page.goto("https://example.com")
-    
-    # Find element by role
-    link = page.get_by_role("link", name="Docs")
-    
-    # Assert element is visible
-    expect(link).to_be_visible()
-    
-    # Perform action
-    link.click()
-    
-    # Verify result
-    expect(page).to_have_title("Documentation")
+
+def test_cube(page: Page):
+    page.goto("http://127.0.0.1:8000/")
+
+    input = page.get_by_placeholder("enter number...")
+    input.fill("5")
+
+    page.get_by_role("button", name="Cube").click()
+
+    result = page.locator("css=p#result")
+    expect(result).to_contain_text("125")
 ```
 
-**Key Components:**
-- `page: Page` - Injected fixture representing the browser page
-- `page.goto()` - Navigate to URL
-- `page.get_by_role()` - Locate elements by accessibility role
-- `expect()` - Web-first assertion that waits up to 5 seconds
+**How it works:**
+
+- `page.goto()` opens the local web application.
+- `get_by_placeholder()` targets the input field.
+- `fill()` enters the test value.
+- `get_by_role()` finds the button by accessible role and visible name.
+- `expect()` validates the UI result.
 
 ---
 
-### Page Object Model (POM)
+### Page Object Model Login Page
 
-#### LoginPage Class Example:
+The Page Object Model stores page elements and page actions inside a reusable class.
+
 ```python
 from playwright.sync_api import Page
 
+
 class LoginPage:
+
     def __init__(self, page: Page):
         self.page = page
         self.page.goto("http://uitestingplayground.com/sampleapp")
-        
-        # Define locators
+
         self.username_input = self.page.get_by_placeholder("User Name")
         self.password_input = self.page.get_by_placeholder("********")
         self.login_btn = self.page.get_by_role("button", name="Log In")
         self.label = self.page.locator("label#loginstatus")
-    
+
     def login(self, username, password):
-        """Perform login action"""
         self.username_input.fill(username)
         self.password_input.fill(password)
         self.login_btn.click()
-    
-    def get_status_message(self):
-        """Get login status message"""
-        return self.label.text_content()
 ```
 
-#### Using POM in Tests:
-```python
-def test_successful_login(page: Page):
-    login_page = LoginPage(page)
-    login_page.login("testuser", "password123")
-    
-    status = login_page.get_status_message()
-    assert "Welcome" in status
-```
+**How it works:**
 
-**Benefits:**
-- Centralized element definitions
-- Easy maintenance - update locators in one place
-- Improved readability and reusability
-- Reduced test code duplication
+- The constructor receives the Playwright `page` fixture.
+- Page locators are assigned to class attributes.
+- The `login()` method performs the repeated login workflow.
+- Tests can call `login_page.login()` instead of repeating locator code.
 
 ---
 
-### Advanced Page Object Example:
-```python
-from playwright.sync_api import Page, Locator
-
-class PlaywrightPage:
-    def __init__(self, page: Page):
-        self.page = page
-        self.page.goto("https://playwright.dev/python")
-        
-        self.docs_link = self.page.get_by_role("link", name="Docs")
-        self.search_input = self.page.get_by_placeholder("Search docs")
-    
-    def visit_docs(self):
-        """Click on Docs link"""
-        self.docs_link.click()
-    
-    def search(self, query):
-        """Search with keyboard shortcut"""
-        self.page.keyboard.press("Control+KeyK")
-        self.search_input.fill(query)
-    
-    def search_results(self) -> Locator:
-        """Get and display search results"""
-        print("Search Results:")
-        for result in self.page.locator("span.DocSearch-Hit-title").all():
-            print(result.inner_text())
-        
-        return self.page.locator("div.DocSearch-Dropdown")
-```
-
----
-
-### Web-First Assertions
+### Page Object Model Test Case
 
 ```python
+from models.login_page import LoginPage
 from playwright.sync_api import Page, expect
-import re
 
-def test_attribute_assertions(page: Page):
-    page.goto("https://playwright.dev/python")
-    
-    docs_link = page.get_by_role("link", name="Docs")
-    
-    # Exact class value
-    expect(docs_link).to_have_class("navbar__item navbar__link")
-    
-    # Partial class match with regex
-    expect(docs_link).to_have_class(re.compile(r"navbar__link"))
-    
-    # Verify attribute exists
-    expect(docs_link).to_have_attribute("href")
-    
-    # Verify attribute value
-    expect(docs_link).to_have_attribute("href", "/python/docs/intro")
-    
-    # Verify text content
-    expect(docs_link).to_contain_text("Docs")
-    
-    # Verify visibility
-    expect(docs_link).to_be_visible()
-    
-    # Verify is enabled
-    expect(docs_link).to_be_enabled()
-    
-    # Count elements
-    expect(page.locator("a.navbar__link")).to_have_count(5)
+
+def test_successful_login(page: Page):
+    username = "dan"
+    password = "pwd"
+
+    login_page = LoginPage(page)
+    login_page.login(username, password)
+
+    expect(login_page.label).to_have_text(f"Welcome, {username}!")
+
+
+def test_failed_login(page: Page):
+    username = "dan"
+    password = "cnasdjc"
+
+    login_page = LoginPage(page)
+    login_page.login(username, password)
+
+    expect(login_page.label).to_have_text("Invalid username/password")
 ```
 
-**Common Assertions:**
-- `to_be_visible()` - Element is visible
-- `to_be_hidden()` - Element is hidden
-- `to_be_enabled()` - Element is enabled
-- `to_be_disabled()` - Element is disabled
-- `to_be_checked()` - Checkbox is checked
-- `to_have_text()` - Text content matches
-- `to_have_attribute()` - Attribute value matches
-- `to_have_class()` - Class attribute matches
-- `to_have_count()` - Number of elements matches
+**How it works:**
+
+- One test validates a successful login path.
+- One test validates a failed login path.
+- Both tests reuse the same `LoginPage` object and `login()` method.
+- The tests stay readable because the page interaction details are hidden inside the page object.
 
 ---
 
-### Pytest Fixtures
+### API Context Fixture
+
+Playwright can test APIs without opening a visible browser page. This project uses `playwright.request.new_context()` for API clients.
 
 ```python
-import pytest
-from playwright.sync_api import sync_playwright, Page
+from playwright.sync_api import Playwright
 
-@pytest.fixture(scope="session")
-def browser():
-    """Create browser instance for entire test session"""
-    p = sync_playwright().start()
-    browser = p.chromium.launch(headless=True)
-    yield browser
-    browser.close()
-    p.stop()
 
-@pytest.fixture
-def context(browser):
-    """Create new context for each test"""
-    context = browser.new_context()
-    yield context
-    context.close()
-
-@pytest.fixture
-def page(context) -> Page:
-    """Create new page for each test"""
-    return context.new_page()
-
-@pytest.fixture
-def api_context(playwright):
-    """Create API context for API testing"""
+def test_users_api(playwright: Playwright):
     api_context = playwright.request.new_context(
-        base_url="https://dummyjson.com",
-        extra_http_headers={'Content-Type': 'application/json'},
+        base_url="https://dummyjson.com"
     )
-    yield api_context
-    api_context.dispose()
 
-def test_with_fixtures(page: Page):
-    """Test using injected fixtures"""
-    page.goto("https://example.com")
-    assert page.title() != ""
-```
-
-**Fixture Scopes:**
-- `function` - New instance per test (default)
-- `class` - Shared per test class
-- `module` - Shared per module
-- `session` - Shared for entire test session
-
----
-
-### API Testing
-
-#### Basic API Test Example:
-```python
-from playwright.sync_api import Page
-
-def test_users_api(page: Page):
-    """Test API endpoint and parse JSON response"""
-    response = page.goto("https://dummyjson.com/users/1")
-    
+    response = api_context.get("/users/1")
     user_data = response.json()
-    
-    # Assertions on API response
+
     assert "firstName" in user_data
     assert "lastName" in user_data
     assert user_data["firstName"] == "Terry"
     assert user_data["lastName"] == "Medhurst"
 ```
 
-#### API Context for Multiple Requests:
+**How it works:**
+
+- `new_context()` creates a reusable API client.
+- `base_url` prevents repeating the full URL in every request.
+- `get()` sends a GET request.
+- `response.json()` converts the response body into a Python dictionary.
+- Python `assert` statements validate response fields and values.
+
+---
+
+### API CRUD Tests
+
 ```python
 import pytest
 from playwright.sync_api import Playwright, APIRequestContext
+
 
 @pytest.fixture
 def api_context(playwright: Playwright) -> APIRequestContext:
     api_context = playwright.request.new_context(
         base_url="https://dummyjson.com",
-        extra_http_headers={'Content-Type': 'application/json'},
+        extra_http_headers={"Content-Type": "application/json"},
     )
     yield api_context
     api_context.dispose()
 
+
 def test_create_user(api_context: APIRequestContext):
-    """Test POST request"""
     response = api_context.post(
         "users/add",
-        data={
-            "firstName": "Damien",
-            "lastName": "Smith",
-            "age": 27
-        }
+        data={"firstName": "Damien", "lastName": "Smith", "age": 27}
     )
     user_data = response.json()
-    
+
     assert user_data["id"] == 101
     assert user_data["firstName"] == "Damien"
 
+
 def test_update_user(api_context: APIRequestContext):
-    """Test PUT request"""
     response = api_context.put(
         "users/1",
-        data={
-            "lastName": "Smith",
-            "age": 20,
-        }
+        data={"lastName": "Smith", "age": 20}
     )
     user_data = response.json()
-    
+
     assert user_data["lastName"] == "Smith"
     assert user_data["age"] == 20
 
+
 def test_remove_user(api_context: APIRequestContext):
-    """Test DELETE request"""
     response = api_context.delete("users/1")
     user_data = response.json()
-    
-    assert user_data["isDeleted"] is True
+
+    assert user_data["isDeleted"]
 ```
 
-#### API Testing with Search Parameters:
-```python
-def test_users_search(api_context: APIRequestContext):
-    """Test API with query parameters"""
-    query = "John"
-    response = api_context.get(f"/users/search?q={query}")
-    
-    users_data = response.json()
-    
-    print(f"Users found: {users_data['total']}")
-    
-    for user in users_data["users"]:
-        print(f"Checking user: {user['firstName']}")
-        assert query in user["firstName"]
-```
+**How it works:**
+
+- The fixture creates one API context for each test.
+- `yield` gives the API context to the test.
+- After the test finishes, `dispose()` cleans up the API context.
+- Separate tests validate POST, PUT, and DELETE behavior.
 
 ---
 
-## API Testing Guide & Tutorial
-
-### Getting Started with API Testing
-
-#### 1. **Understanding HTTP Methods**
-
-| Method | Purpose | Use Case |
-|--------|---------|----------|
-| GET | Retrieve data | Fetch user info, list items |
-| POST | Create new resource | Add new user, submit form |
-| PUT | Update entire resource | Replace user data |
-| PATCH | Partial update | Update specific fields |
-| DELETE | Remove resource | Delete user, remove item |
-
-#### 2. **Setting Up API Context**
+### Data-Driven Test with Pytest Parametrize
 
 ```python
-from playwright.sync_api import Playwright, APIRequestContext
+import pytest
+from root import root
 
-@pytest.fixture
-def api(playwright: Playwright):
-    """Fixture for API testing"""
-    context = playwright.request.new_context(
-        base_url="https://api.example.com/v1",
-        extra_http_headers={
-            'Content-Type': 'application/json',
-            'Authorization': f'Bearer {TOKEN}',
-        }
+
+@pytest.mark.parametrize(
+    ("num", "num_root"),
+    (
+        (100, 10),
+        (36, 6),
+        (25, 5),
+        (16, 4),
+        (9, 3),
+        (4, 2),
     )
-    yield context
-    context.dispose()
-```
-
-#### 3. **Common API Testing Patterns**
-
-**Pattern 1: Test Response Status**
-```python
-def test_api_status(api_context):
-    response = api_context.get("/users/1")
-    assert response.status == 200  # OK
-```
-
-**Pattern 2: Validate Response Structure**
-```python
-def test_response_structure(api_context):
-    response = api_context.get("/users/1")
-    data = response.json()
-    
-    required_fields = ["id", "firstName", "lastName", "email"]
-    for field in required_fields:
-        assert field in data, f"Missing field: {field}"
-```
-
-**Pattern 3: Test Error Handling**
-```python
-def test_user_not_found(api_context):
-    response = api_context.get("/users/99999")
-    assert response.status == 404  # Not Found
-```
-
-**Pattern 4: Validate Array Responses**
-```python
-def test_user_list(api_context):
-    response = api_context.get("/users")
-    users = response.json()
-    
-    assert isinstance(users, list)
-    assert len(users) > 0
-    
-    for user in users:
-        assert "id" in user
-        assert "firstName" in user
-```
-
-#### 4. **API Testing Best Practices**
-
-1. **Use Base URLs** - Reduce duplication
-```python
-api_context = playwright.request.new_context(
-    base_url="https://api.example.com"
 )
-response = api_context.get("/users")  # Full URL: https://api.example.com/users
+def test_root(num, num_root):
+    assert root(num) == num_root
 ```
 
-2. **Set Default Headers** - For authentication and content-type
-```python
-api_context = playwright.request.new_context(
-    base_url="https://api.example.com",
-    extra_http_headers={
-        'Content-Type': 'application/json',
-        'Authorization': f'Bearer {AUTH_TOKEN}',
-    }
-)
-```
+**How it works:**
 
-3. **Validate Response Headers**
-```python
-def test_response_headers(api_context):
-    response = api_context.get("/users")
-    assert response.headers["content-type"] == "application/json"
-    assert "x-ratelimit-remaining" in response.headers
-```
-
-4. **Test Edge Cases**
-```python
-def test_empty_query(api_context):
-    response = api_context.get("/users/search?q=")
-    assert response.status in [200, 400]
-
-def test_special_characters(api_context):
-    response = api_context.get("/users/search?q=John@#$%")
-    assert response.status in [200, 400]
-```
-
-#### 5. **Mocking API Responses**
-
-```python
-from playwright.sync_api import Route
-
-def handle_route(route: Route):
-    """Mock API response"""
-    response = route.fetch()
-    user_data = response.json()
-    
-    # Modify response
-    user_data["firstName"] = "Mocked"
-    
-    route.fulfill(
-        response=response,
-        json=user_data,
-    )
-
-def test_mock_api(page: Page):
-    page.route("https://dummyjson.com/users/1", handle_route)
-    
-    response = page.goto("https://dummyjson.com/users/1")
-    data = response.json()
-    
-    assert data["firstName"] == "Mocked"
-```
-
-#### 6. **Testing Authentication APIs**
-
-```python
-def test_user_login(api_context: APIRequestContext):
-    """Test login API endpoint"""
-    response = api_context.post(
-        "/auth/login",
-        data={
-            "username": "testuser",
-            "password": "password123"
-        }
-    )
-    
-    assert response.status == 200
-    
-    data = response.json()
-    assert "token" in data
-    assert "user" in data
-    assert data["user"]["username"] == "testuser"
-
-def test_token_refresh(api_context: APIRequestContext):
-    """Test token refresh endpoint"""
-    response = api_context.post(
-        "/auth/refresh",
-        data={"refreshToken": "old_token_123"}
-    )
-    
-    assert response.status == 200
-    
-    data = response.json()
-    assert "accessToken" in data
-    assert data["accessToken"] != "old_token_123"
-```
-
-#### 7. **API Testing with File Upload**
-
-```python
-def test_upload_file(api_context: APIRequestContext):
-    """Test file upload endpoint"""
-    response = api_context.post(
-        "/files/upload",
-        files={
-            "file": ("test.txt", b"Hello World", "text/plain")
-        }
-    )
-    
-    assert response.status == 200
-    data = response.json()
-    assert "fileId" in data
-    assert data["filename"] == "test.txt"
-```
-
-#### 8. **Complete API Test Suite Example**
-
-```python
-import pytest
-from playwright.sync_api import Playwright, APIRequestContext
-
-@pytest.fixture
-def api(playwright: Playwright):
-    context = playwright.request.new_context(
-        base_url="https://jsonplaceholder.typicode.com"
-    )
-    yield context
-    context.dispose()
-
-class TestAPIOperations:
-    """Test suite for REST API operations"""
-    
-    def test_get_posts(self, api):
-        response = api.get("/posts")
-        assert response.status == 200
-        
-        posts = response.json()
-        assert isinstance(posts, list)
-        assert len(posts) > 0
-        assert "userId" in posts[0]
-        assert "title" in posts[0]
-        assert "body" in posts[0]
-    
-    def test_create_post(self, api):
-        response = api.post(
-            "/posts",
-            data={
-                "title": "Test Post",
-                "body": "This is a test",
-                "userId": 1
-            }
-        )
-        assert response.status == 201  # Created
-        
-        post = response.json()
-        assert post["title"] == "Test Post"
-        assert post["userId"] == 1
-    
-    def test_get_single_post(self, api):
-        response = api.get("/posts/1")
-        assert response.status == 200
-        
-        post = response.json()
-        assert post["id"] == 1
-        assert "title" in post
-    
-    def test_update_post(self, api):
-        response = api.put(
-            "/posts/1",
-            data={
-                "title": "Updated Title",
-                "body": "Updated body",
-                "userId": 1
-            }
-        )
-        assert response.status == 200
-        
-        post = response.json()
-        assert post["title"] == "Updated Title"
-    
-    def test_delete_post(self, api):
-        response = api.delete("/posts/1")
-        assert response.status == 200
-```
+- `pytest.mark.parametrize` defines multiple input/output pairs.
+- Pytest runs `test_root()` once for every tuple.
+- This avoids writing six separate test functions.
+- When one data row fails, Pytest reports the failing parameter set.
 
 ---
 
-### Data-Driven Testing
+### Behavior-Driven Test Steps
+
+The BDD section uses Behave-style step decorators.
 
 ```python
-import pytest
-from playwright.sync_api import Page
+from behave import *
+from playwright.sync_api import expect
 
-@pytest.mark.parametrize("username,password,expected_result", [
-    ("user1", "pass123", True),
-    ("user2", "pass456", True),
-    ("invalid", "wrong", False),
-    ("", "", False),
-])
-def test_login_multiple_users(page: Page, username, password, expected_result):
-    """Test login with multiple data sets"""
-    page.goto("http://example.com/login")
-    
-    page.get_by_placeholder("Username").fill(username)
-    page.get_by_placeholder("Password").fill(password)
-    page.get_by_role("button", name="Log In").click()
-    
-    if expected_result:
-        assert page.url == "http://example.com/dashboard"
-    else:
-        assert "login" in page.url
+
+@given("username and pwd password")
+def fill_username_and_password(context):
+    context.page.goto("http://uitestingplayground.com/sampleapp")
+    context.page.get_by_placeholder("User Name").fill("name")
+    context.page.get_by_placeholder("********").fill("pwd")
+
+
+@when("Log In button clicked")
+def click_login(context):
+    context.page.get_by_role("button", name="Log In").click()
+
+
+@then("show welcome message")
+def expect_welcome_message(context):
+    message = context.page.locator("css=label#loginstatus")
+    expect(message).to_have_text("Welcome, name!")
 ```
+
+**How it works:**
+
+- `@given` prepares the test state.
+- `@when` performs the action under test.
+- `@then` validates the expected behavior.
+- `context.page` is created in the environment hooks before the scenario runs.
 
 ---
 
-### Behavior Driven Development (BDD)
+### Behavior Test Environment Hooks
 
 ```python
-# features/login.feature
-Feature: User Login
-  Scenario: Successful login
-    Given user navigates to login page
-    When user enters valid credentials
-    And user clicks login button
-    Then user should see dashboard
+from playwright.sync_api import sync_playwright
+
+
+def before_scenario(context, _):
+    context.playwright = sync_playwright().start()
+    context.browser = context.playwright.chromium.launch(
+        headless=False,
+        slow_mo=500
+    )
+    context.page = context.browser.new_page()
+
+
+def after_scenario(context, _):
+    context.browser.close()
+    context.playwright.stop()
 ```
 
-```python
-# tests/test_login_bdd.py
-import pytest
-from pytest_bdd import given, when, then, scenarios
+**How it works:**
 
-scenarios("../features")
-
-@given("user navigates to login page")
-def user_on_login_page(page):
-    page.goto("http://example.com/login")
-    yield page
-
-@when("user enters valid credentials")
-def enter_credentials(page):
-    page.get_by_placeholder("Username").fill("testuser")
-    page.get_by_placeholder("Password").fill("password123")
-
-@when("user clicks login button")
-def click_login(page):
-    page.get_by_role("button", name="Log In").click()
-
-@then("user should see dashboard")
-def verify_dashboard(page):
-    assert page.url == "http://example.com/dashboard"
-```
+- `before_scenario()` starts Playwright before each BDD scenario.
+- Chromium launches with `headless=False` so the test can be watched visually.
+- `slow_mo=500` slows actions down for demonstration and debugging.
+- `after_scenario()` closes the browser and stops Playwright to avoid resource leaks.
 
 ---
 
-### Locator Strategies
+### CI-Ready UI Test Example
 
 ```python
-# By text
-element = page.get_by_text("Click me")
+from playwright.sync_api import Page, expect
 
-# By role
-button = page.get_by_role("button", name="Submit")
-link = page.get_by_role("link", name="Home")
 
-# By placeholder
-input_field = page.get_by_placeholder("Enter name")
+BASE_URL = "http://127.0.0.1:8000/"
 
-# By label
-input_field = page.get_by_label("Username")
 
-# By test ID (requires data-testid attribute)
-element = page.get_by_test_id("user-card")
+def test_empty_input(page: Page):
+    page.goto(BASE_URL)
 
-# CSS selector
-element = page.locator(".button.primary")
-element = page.locator("#submit-btn")
+    input = page.get_by_placeholder("enter number...")
+    input.fill("")
 
-# XPath
-element = page.locator("//button[contains(@class, 'btn-primary')]")
-element = page.locator("//input[@type='email']")
+    page.get_by_role("button", name="Cube").click()
 
-# By attribute
-element = page.locator("[data-id='123']")
-element = page.locator("[aria-label='Close']")
+    result = page.locator("css=p#result")
+    expect(result).to_have_text("Enter something!")
 ```
+
+**How it works:**
+
+- `BASE_URL` centralizes the application URL.
+- The test validates an error/empty-input path.
+- This kind of deterministic UI test is a good candidate for CI execution.
 
 ---
 
-## Tips & Best Practices
+## Playwright Pytest Tutorial and Guide
 
-### 1. **Use Meaningful Wait Strategies**
-```python
-# Good: Uses built-in waiting
-expect(page.get_by_text("Success")).to_be_visible()
+### 1. Create a Python Virtual Environment
 
-# Avoid: Hard coding wait times
-import time
-time.sleep(5)  # ❌ Fragile and slow
-```
-
-### 2. **Avoid Brittle Selectors**
-```python
-# Good: Role-based selectors
-page.get_by_role("button", name="Submit")
-
-# Avoid: CSS selectors dependent on structure
-page.locator("div > div > div > button")  # ❌ Brittle
-```
-
-### 3. **Use Proper Assertions**
-```python
-# Good: Web-first assertions
-expect(page).to_have_url("https://example.com")
-
-# Avoid: Manual checking
-assert page.url == "https://example.com"  # No automatic waiting
-```
-
-### 4. **Organize Tests by Feature**
-```
-tests/
-├── auth/
-│   ├── test_login.py
-│   ├── test_signup.py
-│   └── test_password_reset.py
-├── products/
-│   ├── test_search.py
-│   └── test_details.py
-└── conftest.py
-```
-
-### 5. **Use Descriptive Test Names**
-```python
-# Good
-def test_user_can_login_with_valid_credentials():
-    pass
-
-# Avoid
-def test_1():  # ❌ Not descriptive
-    pass
-```
-
-### 6. **Capture Screenshots on Failure**
-```python
-@pytest.fixture
-def page_with_screenshot(page):
-    yield page
-    if page.context.browser_type.name == "chromium":
-        page.screenshot(path="failure.png")
-```
-
-### 7. **Use Soft Assertions for Multiple Checks**
-```python
-# Check multiple conditions without failing immediately
-expect(page).to_have_title("Expected Title")
-expect(page).to_have_url("https://example.com")
-expect(page.get_by_text("Success")).to_be_visible()
-```
-
----
-
-## Getting Started
-
-### Prerequisites
-- Python 3.8+
-- pip (Python package manager)
-
-### Installation
-
-1. **Clone the repository**
 ```bash
-git clone https://github.com/BrianGator/Playwright-Automation-Python-Pytest.git
-cd Playwright-Automation-Python-Pytest
+python -m venv .venv
 ```
 
-2. **Install dependencies**
+Activate it on Windows:
+
 ```bash
-pip install -r requirements.txt
+.venv\Scripts\activate
 ```
 
-3. **Install Playwright browsers**
+Activate it on macOS/Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+### 2. Install Playwright and Pytest
+
+```bash
+pip install playwright pytest pytest-playwright
+```
+
+### 3. Install Browsers
+
 ```bash
 playwright install
 ```
 
-### Running Tests
+### 4. Create a Basic Test File
 
-```bash
-# Run all tests
-pytest
+Create a file named `test_example.py`:
 
-# Run specific test file
-pytest tests/test_login.py
+```python
+from playwright.sync_api import Page, expect
 
-# Run with verbose output
-pytest -v
 
-# Run tests with headless browser
-pytest --headed=False
-
-# Run tests in parallel
-pytest -n auto
-
-# Generate HTML report
-pytest --html=report.html
-
-# Run with tracing enabled
-pytest --tracing=on
+def test_homepage_title(page: Page):
+    page.goto("https://playwright.dev/python")
+    expect(page).to_have_title("Fast and reliable end-to-end testing for modern web apps | Playwright Python")
 ```
 
-### Configuration
+### 5. Run Tests
 
-Create `pytest.ini` for configuration:
+```bash
+pytest
+```
+
+### 6. Run Tests in Headed Mode
+
+```bash
+pytest --headed
+```
+
+### 7. Run Tests in a Specific Browser
+
+```bash
+pytest --browser chromium
+pytest --browser firefox
+pytest --browser webkit
+```
+
+### 8. Run Tests Slowly for Debugging
+
+```bash
+pytest --headed --slowmo 500
+```
+
+### 9. Generate a Trace
+
+```bash
+pytest --tracing on
+```
+
+### 10. Open a Trace
+
+```bash
+playwright show-trace test-results/path-to-trace.zip
+```
+
+---
+
+## Common Commands
+
+| Command | Purpose |
+|---|---|
+| `pytest` | Run all tests |
+| `pytest path/to/test_file.py` | Run one test file |
+| `pytest -k login` | Run tests matching keyword `login` |
+| `pytest -v` | Run tests with verbose output |
+| `pytest -s` | Show print statements in output |
+| `pytest --headed` | Run browser visibly |
+| `pytest --browser chromium` | Run tests in Chromium |
+| `pytest --browser firefox` | Run tests in Firefox |
+| `pytest --browser webkit` | Run tests in WebKit |
+| `pytest --tracing on` | Capture Playwright traces |
+| `pytest --video on` | Capture videos |
+| `pytest --screenshot only-on-failure` | Save screenshots when tests fail |
+
+---
+
+## Recommended Setup
+
+A clean project setup for this repository would include:
+
+```text
+project-root/
+├── tests/
+│   ├── test_login.py
+│   ├── test_api_users.py
+│   └── test_checkout.py
+├── pages/
+│   ├── login_page.py
+│   └── home_page.py
+├── fixtures/
+│   └── api_fixtures.py
+├── test_data/
+│   └── users.json
+├── conftest.py
+├── pytest.ini
+├── requirements.txt
+└── README.md
+```
+
+Example `requirements.txt`:
+
+```text
+playwright
+pytest
+pytest-playwright
+behave
+```
+
+Example `pytest.ini`:
+
 ```ini
 [pytest]
 testpaths = tests
 python_files = test_*.py
-python_classes = Test*
 python_functions = test_*
-addopts = -v --tb=short
+addopts = -v --screenshot only-on-failure --tracing retain-on-failure
 ```
 
 ---
 
-## Project Functions Overview
+## Testing Strategy
 
-### Navigation Functions
-| Function | Purpose |
-|----------|---------|
-| `page.goto(url)` | Navigate to URL |
-| `page.go_back()` | Navigate back |
-| `page.go_forward()` | Navigate forward |
-| `page.reload()` | Reload page |
+### Smoke Tests
 
-### Locator Functions
-| Function | Purpose |
-|----------|---------|
-| `page.locator(selector)` | CSS/XPath selector |
-| `page.get_by_role(role, name)` | Find by accessibility role |
-| `page.get_by_text(text)` | Find by text content |
-| `page.get_by_placeholder(text)` | Find by placeholder |
-| `page.get_by_label(text)` | Find by label |
-| `page.get_by_test_id(id)` | Find by test ID |
+Run a small set of critical tests to confirm the application is basically working.
 
-### Interaction Functions
-| Function | Purpose |
-|----------|---------|
-| `locator.click()` | Click element |
-| `locator.fill(text)` | Fill input field |
-| `locator.type(text)` | Type text (with events) |
-| `locator.select_option(value)` | Select option |
-| `locator.check()` | Check checkbox |
-| `locator.uncheck()` | Uncheck checkbox |
-| `locator.hover()` | Hover over element |
-| `locator.drag_to(target)` | Drag and drop |
+Examples:
 
-### Assertion Functions
-| Function | Purpose |
-|----------|---------|
-| `expect(locator).to_be_visible()` | Verify visibility |
-| `expect(locator).to_be_hidden()` | Verify hidden state |
-| `expect(locator).to_have_text(text)` | Verify text |
-| `expect(locator).to_have_attribute(attr, value)` | Verify attribute |
-| `expect(locator).to_have_class(class)` | Verify CSS class |
-| `expect(page).to_have_url(url)` | Verify page URL |
-| `expect(page).to_have_title(title)` | Verify page title |
+- Login page loads
+- User can log in
+- Main navigation works
+- Critical API endpoint responds
 
-### API Functions
-| Function | Purpose |
-|----------|---------|
-| `api_context.get(endpoint)` | GET request |
-| `api_context.post(endpoint, data)` | POST request |
-| `api_context.put(endpoint, data)` | PUT request |
-| `api_context.patch(endpoint, data)` | PATCH request |
-| `api_context.delete(endpoint)` | DELETE request |
-| `response.json()` | Parse JSON response |
-| `response.status` | HTTP status code |
+### Regression Tests
+
+Run broader coverage after changes to confirm existing functionality still works.
+
+Examples:
+
+- UI playground tests
+- API CRUD tests
+- Authentication tests
+- Page Object Model tests
+- Data-driven tests
+
+### API Tests
+
+Validate service responses directly before relying on UI tests.
+
+Examples:
+
+- GET user
+- Search user
+- Create user
+- Update user
+- Delete user
+
+### Negative Tests
+
+Validate bad input and error behavior.
+
+Examples:
+
+- Failed login
+- Empty input
+- Invalid credentials
+- Invalid search criteria
+
+### Cross-Browser Tests
+
+Use Playwright browser support to test Chromium, Firefox, and WebKit.
 
 ---
 
-## Project Sections Overview
+## Best Practices and Tips
 
-- **S01** - Getting Started with Playwright
-- **S02** - Locator Strategies (CSS, XPath, Accessibility)
-- **S04** - Event Handling
-- **S05** - Authentication & Session Management
-- **S06** - Automated Email Testing
-- **S07** - Pytest Fundamentals
-- **S08** - Pytest-Playwright Plugin
-- **S09** - Playwright Tools (Inspector, Trace Viewer)
-- **S10** - Web-First Assertions
-- **S11** - Real-world UI Testing Examples
-- **S12** - Custom Fixtures
-- **S13** - Page Object Model Pattern
-- **S15** - REST API Testing
-- **S16** - Performance Optimization
-- **S17** - Pro Tips & Tricks
-- **S18** - GitHub API Testing
-- **S19** - CI/CD Integration
-- **S20** - Data-Driven Testing
-- **S21** - Behavior-Driven Development
+### Prefer User-Facing Locators
+
+Best:
+
+```python
+page.get_by_role("button", name="Log In")
+page.get_by_placeholder("User Name")
+page.get_by_text("Welcome")
+```
+
+Use CSS when role/text locators are not stable:
+
+```python
+page.locator("label#loginstatus")
+```
+
+### Avoid Hard Waits
+
+Avoid:
+
+```python
+page.wait_for_timeout(5000)
+```
+
+Prefer:
+
+```python
+expect(page.locator("#status")).to_have_text("Complete")
+```
+
+### Keep Tests Short
+
+A good test should usually follow this pattern:
+
+```python
+# Arrange
+page.goto(BASE_URL)
+
+# Act
+page.get_by_role("button", name="Submit").click()
+
+# Assert
+expect(page.locator("#message")).to_have_text("Saved")
+```
+
+### Use Page Objects for Repeated Workflows
+
+If multiple tests repeat the same login or navigation workflow, move it into a page object method.
+
+```python
+login_page.login(username, password)
+```
+
+### Use Fixtures for Setup and Cleanup
+
+Use fixtures for browser setup, API clients, authentication state, and test data preparation.
+
+```python
+@pytest.fixture
+def api_context(playwright):
+    context = playwright.request.new_context(base_url="https://dummyjson.com")
+    yield context
+    context.dispose()
+```
+
+### Use Parametrization for Coverage
+
+```python
+@pytest.mark.parametrize("username,password", [
+    ("valid_user", "valid_pass"),
+    ("locked_user", "valid_pass"),
+    ("invalid_user", "bad_pass"),
+])
+def test_login_cases(page, username, password):
+    pass
+```
+
+### Store Secrets Outside Source Code
+
+For GitHub API tests, do not commit personal access tokens. Use environment variables or GitHub Actions secrets.
+
+Recommended pattern:
+
+```python
+import os
+
+GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
+```
+
+### Capture Debugging Artifacts
+
+For failures, use screenshots, video, and traces:
+
+```bash
+pytest --screenshot only-on-failure --video retain-on-failure --tracing retain-on-failure
+```
+
+### Keep API Tests Independent
+
+API tests should create their own data and clean it up when possible. This keeps tests repeatable.
 
 ---
 
-## Resources
+## Troubleshooting Guide
 
-- [Playwright Documentation](https://playwright.dev/python/)
-- [Pytest Documentation](https://docs.pytest.org/)
-- [Pytest-BDD Documentation](https://pytest-bdd.readthedocs.io/)
+### Browser Not Installed
+
+Error example:
+
+```text
+Executable doesn't exist...
+```
+
+Fix:
+
+```bash
+playwright install
+```
+
+### Test Cannot Find Element
+
+Possible causes:
+
+- The locator is incorrect.
+- The element is inside an iframe.
+- The element is not visible yet.
+- The page did not navigate successfully.
+
+Fixes:
+
+```python
+expect(page.get_by_role("button", name="Log In")).to_be_visible()
+```
+
+Use Playwright Inspector:
+
+```bash
+PWDEBUG=1 pytest
+```
+
+On Windows PowerShell:
+
+```powershell
+$env:PWDEBUG=1
+pytest
+```
+
+### Flaky Timing Failures
+
+Avoid fixed sleeps. Use web-first assertions:
+
+```python
+expect(page.locator("#result")).to_contain_text("Done")
+```
+
+### API Test Fails with Authentication Error
+
+Check:
+
+- Token exists
+- Token has required permissions
+- Token is passed in the expected header format
+- Token is stored securely outside the repo
+
+### Localhost Test Fails
+
+If a test uses `http://127.0.0.1:8000/`, make sure the application server is running before executing Pytest.
 
 ---
+
+## Suggested Improvements
+
+Future enhancements that would make this project even stronger:
+
+1. Add a `requirements.txt` file with pinned dependency versions.
+2. Add a `pytest.ini` file with default Pytest settings.
+3. Add a `.github/workflows/playwright.yml` workflow to run tests automatically.
+4. Add screenshots and trace artifacts to CI results.
+5. Move page object classes into a consistent `pages/` or `models/` package.
+6. Move test data into a `test_data/` directory.
+7. Add Allure or HTML reports for portfolio-friendly reporting.
+8. Add environment variable handling for API tokens.
+9. Add README badges for Python, Pytest, Playwright, and CI status.
+10. Add more negative tests and boundary-value tests.
+
+---
+
+## Author
 
 **Written by Brian McCarthy**
 
-Licensed under the MIT License.
+This repository demonstrates practical Playwright automation engineering skills using Python, Pytest, Page Object Model design, REST API testing, data-driven testing, behavior-driven testing, and CI-ready automation patterns.
