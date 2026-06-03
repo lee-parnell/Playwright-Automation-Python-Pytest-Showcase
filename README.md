@@ -10,44 +10,46 @@ This README is organized as a numbered tutorial. Existing sections cover the mai
 
 ## Table of Contents
 
-1. [Project Overview](#1-project-overview)
-2. [Repository Goals](#2-repository-goals)
-3. [Languages, Tools, and Frameworks](#3-languages-tools-and-frameworks)
-4. [Project File Links](#4-project-file-links)
-5. [Core Commands](#5-core-commands)
-6. [Module 1 - Getting Started](#6-module-1---getting-started)
-7. [Module 2 - Locators](#7-module-2---locators)
-8. [Module 3 - Actions](#8-module-3---actions)
-9. [Module 4 - Events](#9-module-4---events)
-10. [Module 5 - Authentication](#10-module-5---authentication)
-11. [Module 6 - Automated Mail Checker](#11-module-6---automated-mail-checker)
-12. [Module 7 - Pytest](#12-module-7---pytest)
-13. [Module 8 - pytest-playwright Plugin](#13-module-8---pytest-playwright-plugin)
-14. [Module 9 - Playwright Tools](#14-module-9---playwright-tools)
-15. [Module 10 - Web-First Assertions](#15-module-10---web-first-assertions)
-16. [Module 11 - UI Testing Playground](#16-module-11---ui-testing-playground)
-17. [Module 12 - Playwright Fixtures](#17-module-12---playwright-fixtures)
-18. [Module 13 - Page Object Model](#18-module-13---page-object-model)
-19. [Module 14 - Network Events](#19-module-14---network-events)
-20. [Module 15 - API Testing](#20-module-15---api-testing)
-21. [Module 16 - Optimization](#21-module-16---optimization)
-22. [Module 17 - Tips and Tricks](#22-module-17---tips-and-tricks)
-23. [Module 18 - GitHub API](#23-module-18---github-api)
-24. [Module 19 - Continuous Integration](#24-module-19---continuous-integration)
-25. [Module 20 - Data-Driven Testing](#25-module-20---data-driven-testing)
-26. [Module 21 - Behavior-Driven Development](#26-module-21---behavior-driven-development)
-27. [Supplemental Module 22 - Playwright vs Cypress](#27-supplemental-module-22---playwright-vs-cypress)
-28. [Supplemental Module 23 - Development Environment, Test Application, and JavaScript TypeScript Fundamentals](#28-supplemental-module-23---development-environment-test-application-and-javascript-typescript-fundamentals)
-29. [Supplemental Module 24 - DOM Terminology and Advanced Locator Architecture](#29-supplemental-module-24---dom-terminology-and-advanced-locator-architecture)
-30. [Supplemental Module 25 - Advanced UI Widgets and Complex Interactions](#30-supplemental-module-25---advanced-ui-widgets-and-complex-interactions)
-31. [Supplemental Module 26 - Advanced Page Object Architecture](#31-supplemental-module-26---advanced-page-object-architecture)
-32. [Supplemental Module 27 - Advanced API State, Mocking, Authentication, and Cleanup](#32-supplemental-module-27---advanced-api-state-mocking-authentication-and-cleanup)
-33. [Supplemental Module 28 - Advanced Framework Configuration, Environment Variables, Retries, Tags, and Test Data](#33-supplemental-module-28---advanced-framework-configuration-environment-variables-retries-tags-and-test-data)
-34. [Supplemental Module 29 - Reporting, Screenshots, Videos, and Visual Testing](#34-supplemental-module-29---reporting-screenshots-videos-and-visual-testing)
-35. [Supplemental Module 30 - Docker, GitHub Actions, and Argos CI](#35-supplemental-module-30---docker-github-actions-and-argos-ci)
-36. [Playwright Automation Top 20 Interview Questions and Answers](#36-playwright-automation-top-20-interview-questions-and-answers)
-37. [Best Practices and Troubleshooting](#37-best-practices-and-troubleshooting)
-38. [Author](#38-author)
+| Section / Module | Contents Covered |
+|---|---|
+| [1. Project Overview](#1-project-overview) | Explains the purpose of the repository, the automation topics covered, and how the project functions as a Playwright/Python/Pytest portfolio guide. |
+| [2. Repository Goals](#2-repository-goals) | Lists the core learning and portfolio objectives: UI automation, API testing, fixtures, POM, CI, data-driven testing, BDD, reporting, Docker, and visual validation. |
+| [3. Languages, Tools, and Frameworks](#3-languages-tools-and-frameworks) | Summarizes Python, Playwright, Pytest, pytest-playwright, Behave, GitHub API, GitHub Actions, JavaScript/TypeScript concepts, Docker, and visual tools. |
+| [4. Project File Links](#4-project-file-links) | Links to the repository’s S01-S21 sections and describes each folder’s main focus. |
+| [5. Core Commands](#5-core-commands) | Provides setup and execution commands for installing dependencies, running Pytest, launching browsers, tracing, and running Behave. |
+| [6. Module 1 - Getting Started](#6-module-1---getting-started) | Covers Playwright installation, documentation usage, browser launch, first navigation, link clicking, and the basic script structure. |
+| [7. Module 2 - Locators](#7-module-2---locators) | Covers role locators, input locators, text locators, alt text, title, CSS, hierarchy selectors, pseudo-classes, XPath, and locator strategy. |
+| [8. Module 3 - Actions](#8-module-3---actions) | Covers mouse actions, text input, radio buttons, checkboxes, switches, select options, dropdowns, file upload, and keyboard shortcuts. |
+| [9. Module 4 - Events](#9-module-4---events) | Covers auto-waiting, navigation waits, custom waits, event listeners, dialogs, downloads, and sync/async Playwright usage. |
+| [10. Module 5 - Authentication](#10-module-5---authentication) | Covers login flows, saved storage state, authenticated session reuse, authentication edge cases, and secret-handling cautions. |
+| [11. Module 6 - Automated Mail Checker](#11-module-6---automated-mail-checker) | Covers mailbox automation, locating new emails, extracting sender/subject/preview data, combining locators, and terminal-based checks. |
+| [12. Module 7 - Pytest](#12-module-7---pytest) | Covers writing and running Pytest tests, type hints, test state, fixtures, fixture usage, and fixture scope. |
+| [13. Module 8 - pytest-playwright Plugin](#13-module-8---pytest-playwright-plugin) | Covers plugin setup, Playwright test execution with Pytest fixtures, Pytest configuration, and hooks. |
+| [14. Module 9 - Playwright Tools](#14-module-9---playwright-tools) | Covers codegen, inspector, headed mode, slow motion, screenshots, tracing, trace viewer, videos, and reports. |
+| [15. Module 10 - Web-First Assertions](#15-module-10---web-first-assertions) | Covers Playwright assertions for page state, element state, text, attributes, input values, checkboxes, option menus, and soft assertion concepts. |
+| [16. Module 11 - UI Testing Playground](#16-module-11---ui-testing-playground) | Covers difficult UI automation cases: dynamic IDs, hidden layers, Ajax, dynamic tables, progress bars, visibility, login, hover, NBSP, and overlays. |
+| [17. Module 12 - Playwright Fixtures](#17-module-12---playwright-fixtures) | Covers function-scope fixtures, session-scope fixtures, browser selection, browser launch arguments, context arguments, and reusable setup. |
+| [18. Module 13 - Page Object Model](#18-module-13---page-object-model) | Covers the POM pattern, implementation, reusable page classes, locator encapsulation, and using page objects in tests. |
+| [19. Module 14 - Network Events](#19-module-14---network-events) | Covers request/response inspection, request handling, route interception, mocked API responses, and response modification. |
+| [20. Module 15 - API Testing](#20-module-15---api-testing) | Covers Playwright API request contexts, GET requests, query strings, CRUD operations, response assertions, and mock API concepts. |
+| [21. Module 16 - Optimization](#21-module-16---optimization) | Covers request interception for performance, disabling JavaScript, blocking images/fonts, and parallel test execution. |
+| [22. Module 17 - Tips and Tricks](#22-module-17---tips-and-tricks) | Covers CLI arguments, debugger usage, device emulation, JavaScript evaluation, and report-related productivity patterns. |
+| [23. Module 18 - GitHub API](#23-module-18---github-api) | Covers GitHub API testing, token usage, authorized request contexts, repository metadata calls, and secure environment variable practices. |
+| [24. Module 19 - Continuous Integration](#24-module-19---continuous-integration) | Covers GitHub Actions setup, dependency installation, browser installation, CI-safe test execution, and workflow results. |
+| [25. Module 20 - Data-Driven Testing](#25-module-20---data-driven-testing) | Covers Pytest parametrization, repeated execution with multiple data rows, and reducing duplicate test logic. |
+| [26. Module 21 - Behavior-Driven Development](#26-module-21---behavior-driven-development) | Covers BDD concepts, Gherkin feature files, Given/When/Then step definitions, Behave hooks, and scenario execution. |
+| [27. Supplemental Module 22 - Playwright vs Cypress](#27-supplemental-module-22---playwright-vs-cypress) | Compares Playwright and Cypress architecture, browser support, API capabilities, locator style, and framework fit. |
+| [28. Supplemental Module 23 - Development Environment, Test Application, and JavaScript TypeScript Fundamentals](#28-supplemental-module-23---development-environment-test-application-and-javascript-typescript-fundamentals) | Adds environment setup, VS Code/Git/Node checks, test application cloning, JavaScript basics, and TypeScript comparison concepts. |
+| [29. Supplemental Module 24 - DOM Terminology and Advanced Locator Architecture](#29-supplemental-module-24---dom-terminology-and-advanced-locator-architecture) | Covers DOM tags, attributes, IDs, classes, parent/child relationships, filters, extracted values, test IDs, and timeout settings. |
+| [30. Supplemental Module 25 - Advanced UI Widgets and Complex Interactions](#30-supplemental-module-25---advanced-ui-widgets-and-complex-interactions) | Covers tooltips, web tables, date pickers, sliders, iFrames, drag-and-drop, overlapped elements, and complex interaction patterns. |
+| [31. Supplemental Module 26 - Advanced Page Object Architecture](#31-supplemental-module-26---advanced-page-object-architecture) | Covers base page classes, helper methods, navigation page objects, date picker page objects, page managers, and reusable framework architecture. |
+| [32. Supplemental Module 27 - Advanced API State, Mocking, Authentication, and Cleanup](#32-supplemental-module-27---advanced-api-state-mocking-authentication-and-cleanup) | Covers API authentication, API-created preconditions, browser response interception, UI/API hybrid flows, and cleanup after tests. |
+| [33. Supplemental Module 28 - Advanced Framework Configuration, Environment Variables, Retries, Tags, and Test Data](#33-supplemental-module-28---advanced-framework-configuration-environment-variables-retries-tags-and-test-data) | Covers `.env` configuration, Faker-generated test data, Pytest markers/tags, retries, parallel workers, and global setup/teardown. |
+| [34. Supplemental Module 29 - Reporting, Screenshots, Videos, and Visual Testing](#34-supplemental-module-29---reporting-screenshots-videos-and-visual-testing) | Covers screenshots, element screenshots, screenshot buffers, video recording, visual snapshot assertions, report export, and Allure-style reporting. |
+| [35. Supplemental Module 30 - Docker, GitHub Actions, and Argos CI](#35-supplemental-module-30---docker-github-actions-and-argos-ci) | Covers Dockerfile setup, docker-compose execution, report volume mapping, GitHub Actions artifacts, and Argos CI visual validation concepts. |
+| [36. Playwright Automation Top 20 Interview Questions and Answers](#36-playwright-automation-top-20-interview-questions-and-answers) | Provides top Playwright interview Q&A covering framework concepts, contexts, locators, auto-waiting, assertions, POM, API testing, network mocking, CI, and debugging. |
+| [37. Best Practices and Troubleshooting](#37-best-practices-and-troubleshooting) | Summarizes recommended Playwright practices and fixes for common failures such as missing browsers, flaky locators, CI login issues, 401 API responses, and download problems. |
+| [38. Author](#38-author) | Lists author credit for Brian McCarthy and the Playwright automation showcase. |
 
 ---
 
