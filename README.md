@@ -2,9 +2,9 @@
 
 **Written by Brian McCarthy**
 
-A complete hands-on Playwright automation guide using **Python**, **Pytest**, `pytest-playwright`, Page Object Model design, fixtures, web-first assertions, API testing, network interception, CI execution, data-driven testing, behavior-driven development, and supplemental advanced automation topics.
+A complete hands-on Playwright automation guide using **Python**, **Pytest**, `pytest-playwright`, Page Object Model design, fixtures, web-first assertions, API testing, network interception, login testing, CI/CD execution, data-driven testing, behavior-driven development, Docker, visual testing, and framework architecture.
 
-This README is organized as a numbered tutorial. Existing sections cover the main Python Playwright/Pytest modules. Supplemental modules were added only for subject matter from the additional course outline that was not already covered or not covered in enough depth.
+This README is organized as a numbered tutorial. Each module explains the main purpose, what the user needs to know, code examples, and expected results. Supplemental modules add framework-building guidance, framework-selection guidance, advanced CI/CD, API testing, and login testing material.
 
 ---
 
@@ -12,52 +12,58 @@ This README is organized as a numbered tutorial. Existing sections cover the mai
 
 | Section / Module | Contents Covered |
 |---|---|
-| [1. Project Overview](#1-project-overview) | Explains the purpose of the repository, the automation topics covered, and how the project functions as a Playwright/Python/Pytest portfolio guide. |
-| [2. Repository Goals](#2-repository-goals) | Lists the core learning and portfolio objectives: UI automation, API testing, fixtures, POM, CI, data-driven testing, BDD, reporting, Docker, and visual validation. |
-| [3. Languages, Tools, and Frameworks](#3-languages-tools-and-frameworks) | Summarizes Python, Playwright, Pytest, pytest-playwright, Behave, GitHub API, GitHub Actions, JavaScript/TypeScript concepts, Docker, and visual tools. |
+| [1. Project Overview](#1-project-overview) | Explains the purpose of the repository and the Playwright/Python/Pytest automation topics covered. |
+| [2. Repository Goals](#2-repository-goals) | Lists the portfolio and learning objectives for UI automation, API testing, fixtures, POM, CI/CD, login testing, and framework design. |
+| [3. Languages, Tools, and Frameworks](#3-languages-tools-and-frameworks) | Summarizes Python, Playwright, Pytest, pytest-playwright, Behave, GitHub API, GitHub Actions, Docker, visual tools, and JavaScript/TypeScript concepts. |
 | [4. Project File Links](#4-project-file-links) | Links to the repository’s S01-S21 sections and describes each folder’s main focus. |
-| [5. Core Commands](#5-core-commands) | Provides setup and execution commands for installing dependencies, running Pytest, launching browsers, tracing, and running Behave. |
-| [6. Module 1 - Getting Started](#6-module-1---getting-started) | Covers Playwright installation, documentation usage, browser launch, first navigation, link clicking, and the basic script structure. |
-| [7. Module 2 - Locators](#7-module-2---locators) | Covers role locators, input locators, text locators, alt text, title, CSS, hierarchy selectors, pseudo-classes, XPath, and locator strategy. |
-| [8. Module 3 - Actions](#8-module-3---actions) | Covers mouse actions, text input, radio buttons, checkboxes, switches, select options, dropdowns, file upload, and keyboard shortcuts. |
-| [9. Module 4 - Events](#9-module-4---events) | Covers auto-waiting, navigation waits, custom waits, event listeners, dialogs, downloads, and sync/async Playwright usage. |
-| [10. Module 5 - Authentication](#10-module-5---authentication) | Covers login flows, saved storage state, authenticated session reuse, authentication edge cases, and secret-handling cautions. |
-| [11. Module 6 - Automated Mail Checker](#11-module-6---automated-mail-checker) | Covers mailbox automation, locating new emails, extracting sender/subject/preview data, combining locators, and terminal-based checks. |
-| [12. Module 7 - Pytest](#12-module-7---pytest) | Covers writing and running Pytest tests, type hints, test state, fixtures, fixture usage, and fixture scope. |
-| [13. Module 8 - pytest-playwright Plugin](#13-module-8---pytest-playwright-plugin) | Covers plugin setup, Playwright test execution with Pytest fixtures, Pytest configuration, and hooks. |
-| [14. Module 9 - Playwright Tools](#14-module-9---playwright-tools) | Covers codegen, inspector, headed mode, slow motion, screenshots, tracing, trace viewer, videos, and reports. |
-| [15. Module 10 - Web-First Assertions](#15-module-10---web-first-assertions) | Covers Playwright assertions for page state, element state, text, attributes, input values, checkboxes, option menus, and soft assertion concepts. |
-| [16. Module 11 - UI Testing Playground](#16-module-11---ui-testing-playground) | Covers difficult UI automation cases: dynamic IDs, hidden layers, Ajax, dynamic tables, progress bars, visibility, login, hover, NBSP, and overlays. |
-| [17. Module 12 - Playwright Fixtures](#17-module-12---playwright-fixtures) | Covers function-scope fixtures, session-scope fixtures, browser selection, browser launch arguments, context arguments, and reusable setup. |
-| [18. Module 13 - Page Object Model](#18-module-13---page-object-model) | Covers the POM pattern, implementation, reusable page classes, locator encapsulation, and using page objects in tests. |
-| [19. Module 14 - Network Events](#19-module-14---network-events) | Covers request/response inspection, request handling, route interception, mocked API responses, and response modification. |
-| [20. Module 15 - API Testing](#20-module-15---api-testing) | Covers Playwright API request contexts, GET requests, query strings, CRUD operations, response assertions, and mock API concepts. |
-| [21. Module 16 - Optimization](#21-module-16---optimization) | Covers request interception for performance, disabling JavaScript, blocking images/fonts, and parallel test execution. |
-| [22. Module 17 - Tips and Tricks](#22-module-17---tips-and-tricks) | Covers CLI arguments, debugger usage, device emulation, JavaScript evaluation, and report-related productivity patterns. |
-| [23. Module 18 - GitHub API](#23-module-18---github-api) | Covers GitHub API testing, token usage, authorized request contexts, repository metadata calls, and secure environment variable practices. |
-| [24. Module 19 - Continuous Integration](#24-module-19---continuous-integration) | Covers GitHub Actions setup, dependency installation, browser installation, CI-safe test execution, and workflow results. |
-| [25. Module 20 - Data-Driven Testing](#25-module-20---data-driven-testing) | Covers Pytest parametrization, repeated execution with multiple data rows, and reducing duplicate test logic. |
-| [26. Module 21 - Behavior-Driven Development](#26-module-21---behavior-driven-development) | Covers BDD concepts, Gherkin feature files, Given/When/Then step definitions, Behave hooks, and scenario execution. |
-| [27. Supplemental Module 22 - Playwright vs Cypress](#27-supplemental-module-22---playwright-vs-cypress) | Compares Playwright and Cypress architecture, browser support, API capabilities, locator style, and framework fit. |
-| [28. Supplemental Module 23 - Development Environment, Test Application, and JavaScript TypeScript Fundamentals](#28-supplemental-module-23---development-environment-test-application-and-javascript-typescript-fundamentals) | Adds environment setup, VS Code/Git/Node checks, test application cloning, JavaScript basics, and TypeScript comparison concepts. |
-| [29. Supplemental Module 24 - DOM Terminology and Advanced Locator Architecture](#29-supplemental-module-24---dom-terminology-and-advanced-locator-architecture) | Covers DOM tags, attributes, IDs, classes, parent/child relationships, filters, extracted values, test IDs, and timeout settings. |
-| [30. Supplemental Module 25 - Advanced UI Widgets and Complex Interactions](#30-supplemental-module-25---advanced-ui-widgets-and-complex-interactions) | Covers tooltips, web tables, date pickers, sliders, iFrames, drag-and-drop, overlapped elements, and complex interaction patterns. |
-| [31. Supplemental Module 26 - Advanced Page Object Architecture](#31-supplemental-module-26---advanced-page-object-architecture) | Covers base page classes, helper methods, navigation page objects, date picker page objects, page managers, and reusable framework architecture. |
-| [32. Supplemental Module 27 - Advanced API State, Mocking, Authentication, and Cleanup](#32-supplemental-module-27---advanced-api-state-mocking-authentication-and-cleanup) | Covers API authentication, API-created preconditions, browser response interception, UI/API hybrid flows, and cleanup after tests. |
-| [33. Supplemental Module 28 - Advanced Framework Configuration, Environment Variables, Retries, Tags, and Test Data](#33-supplemental-module-28---advanced-framework-configuration-environment-variables-retries-tags-and-test-data) | Covers `.env` configuration, Faker-generated test data, Pytest markers/tags, retries, parallel workers, and global setup/teardown. |
-| [34. Supplemental Module 29 - Reporting, Screenshots, Videos, and Visual Testing](#34-supplemental-module-29---reporting-screenshots-videos-and-visual-testing) | Covers screenshots, element screenshots, screenshot buffers, video recording, visual snapshot assertions, report export, and Allure-style reporting. |
-| [35. Supplemental Module 30 - Docker, GitHub Actions, and Argos CI](#35-supplemental-module-30---docker-github-actions-and-argos-ci) | Covers Dockerfile setup, docker-compose execution, report volume mapping, GitHub Actions artifacts, and Argos CI visual validation concepts. |
-| [36. Playwright Automation Top 20 Interview Questions and Answers](#36-playwright-automation-top-20-interview-questions-and-answers) | Provides top Playwright interview Q&A covering framework concepts, contexts, locators, auto-waiting, assertions, POM, API testing, network mocking, CI, and debugging. |
-| [37. Best Practices and Troubleshooting](#37-best-practices-and-troubleshooting) | Summarizes recommended Playwright practices and fixes for common failures such as missing browsers, flaky locators, CI login issues, 401 API responses, and download problems. |
-| [38. Author](#38-author) | Lists author credit for Brian McCarthy and the Playwright automation showcase. |
+| [5. Core Commands](#5-core-commands) | Provides setup and execution commands for dependencies, browsers, Pytest, tracing, and Behave. |
+| [6. Module 1 - Getting Started](#6-module-1---getting-started) | Covers installation, browser launch, first navigation, link clicking, and basic script structure. |
+| [7. Module 2 - Locators](#7-module-2---locators) | Covers role, input, text, alt text, title, CSS, hierarchy, pseudo-class, XPath, test ID, and filtering locator strategies. |
+| [8. Module 3 - Actions](#8-module-3---actions) | Covers mouse actions, keyboard actions, text input, radio buttons, checkboxes, switches, select options, dropdowns, and uploads. |
+| [9. Module 4 - Events](#9-module-4---events) | Covers auto-waiting, navigation waits, event listeners, dialogs, downloads, popups, and sync/async usage. |
+| [10. Module 5 - Authentication](#10-module-5---authentication) | Covers login flows, saved storage state, auth reuse, edge cases, MFA limitations, and credential handling. |
+| [11. Module 6 - Automated Mail Checker](#11-module-6---automated-mail-checker) | Covers mailbox automation, locating new emails, extracting sender/subject/body data, and terminal checks. |
+| [12. Module 7 - Pytest](#12-module-7---pytest) | Covers writing/running tests, type hints, test state, fixtures, fixture usage, fixture scope, and assertions. |
+| [13. Module 8 - pytest-playwright Plugin](#13-module-8---pytest-playwright-plugin) | Covers plugin setup, `page`/`browser` fixtures, Pytest config, hooks, and browser CLI options. |
+| [14. Module 9 - Playwright Tools](#14-module-9---playwright-tools) | Covers codegen, inspector, headed mode, slow motion, screenshots, traces, videos, and debugging. |
+| [15. Module 10 - Web-First Assertions](#15-module-10---web-first-assertions) | Covers page, element, text, attribute, input, checkbox, option menu, generic assertion, and soft assertion patterns. |
+| [16. Module 11 - UI Testing Playground](#16-module-11---ui-testing-playground) | Covers dynamic IDs, hidden layers, Ajax, dynamic tables, progress bars, visibility, hover, NBSP, and overlays. |
+| [17. Module 12 - Playwright Fixtures](#17-module-12---playwright-fixtures) | Covers function/session fixtures, browser selection, launch args, context args, and reusable setup. |
+| [18. Module 13 - Page Object Model](#18-module-13---page-object-model) | Covers POM design, reusable page classes, locator encapsulation, page methods, and readable tests. |
+| [19. Module 14 - Network Events](#19-module-14---network-events) | Covers request/response inspection, routing, interception, mocked responses, blocking resources, and response modification. |
+| [20. Module 15 - API Testing](#20-module-15---api-testing) | Covers API request contexts, GET/POST/PUT/PATCH/DELETE, query strings, response assertions, auth headers, and cleanup. |
+| [21. Module 16 - Optimization](#21-module-16---optimization) | Covers blocking images/fonts, disabling JavaScript, parallel execution, selective runs, and performance-friendly patterns. |
+| [22. Module 17 - Tips and Tricks](#22-module-17---tips-and-tricks) | Covers CLI args, debugger usage, device emulation, JavaScript evaluation, reports, and local debugging. |
+| [23. Module 18 - GitHub API](#23-module-18---github-api) | Covers GitHub API testing, token usage, authorized request contexts, public repo metadata, and environment variables. |
+| [24. Module 19 - Continuous Integration](#24-module-19---continuous-integration) | Covers GitHub Actions setup, browser installation, CI-safe execution, artifacts, reports, and PR validation. |
+| [25. Module 20 - Data-Driven Testing](#25-module-20---data-driven-testing) | Covers Pytest parametrization, multiple input rows, expected results, and coverage expansion. |
+| [26. Module 21 - Behavior-Driven Development](#26-module-21---behavior-driven-development) | Covers Behave, Gherkin feature files, Given/When/Then steps, hooks, and scenario execution. |
+| [27. Supplemental Module 22 - Playwright vs Cypress](#27-supplemental-module-22---playwright-vs-cypress) | Compares Playwright and Cypress architecture, browser support, API testing, locator style, and best-fit scenarios. |
+| [28. Supplemental Module 23 - Development Environment, Test Application, and JavaScript TypeScript Fundamentals](#28-supplemental-module-23---development-environment-test-application-and-javascript-typescript-fundamentals) | Covers environment checks, VS Code/Git/Node/Python setup, JavaScript basics, and TypeScript concepts. |
+| [29. Supplemental Module 24 - DOM Terminology and Advanced Locator Architecture](#29-supplemental-module-24---dom-terminology-and-advanced-locator-architecture) | Covers DOM structure, attributes, IDs, classes, parent/child locators, filters, extracted values, test IDs, and timeouts. |
+| [30. Supplemental Module 25 - Advanced UI Widgets and Complex Interactions](#30-supplemental-module-25---advanced-ui-widgets-and-complex-interactions) | Covers tooltips, tables, date pickers, sliders, iframes, drag-and-drop, and overlapped elements. |
+| [31. Supplemental Module 26 - Advanced Page Object Architecture](#31-supplemental-module-26---advanced-page-object-architecture) | Covers base pages, helper methods, page managers, reusable components, and scalable framework architecture. |
+| [32. Supplemental Module 27 - Advanced API State, Mocking, Authentication, and Cleanup](#32-supplemental-module-27---advanced-api-state-mocking-authentication-and-cleanup) | Covers API preconditions, UI/API hybrid flows, API login, mocked state, browser response capture, and teardown cleanup. |
+| [33. Supplemental Module 28 - Advanced Framework Configuration, Environment Variables, Retries, Tags, and Test Data](#33-supplemental-module-28---advanced-framework-configuration-environment-variables-retries-tags-and-test-data) | Covers `.env`, Faker, Pytest markers, retries, parallel workers, global setup/teardown, and test data strategy. |
+| [34. Supplemental Module 29 - Reporting, Screenshots, Videos, and Visual Testing](#34-supplemental-module-29---reporting-screenshots-videos-and-visual-testing) | Covers screenshots, element screenshots, videos, snapshot testing, report export, Allure-style reports, and visual diffing. |
+| [35. Supplemental Module 30 - Docker, GitHub Actions, and Argos CI](#35-supplemental-module-30---docker-github-actions-and-argos-ci) | Covers Dockerfile setup, docker-compose, report volume mapping, GitHub Actions artifacts, and Argos visual validation. |
+| [36. Supplemental Module 31 - Building a Playwright Framework from Scratch](#36-supplemental-module-31---building-a-playwright-framework-from-scratch) | Explains when to build a custom framework, required files, required dependencies, folder structure, setup steps, and starter code. |
+| [37. Supplemental Module 32 - Custom Framework vs Out-of-the-Box Framework](#37-supplemental-module-32---custom-framework-vs-out-of-the-box-framework) | Explains when a custom framework is worth it and when to use popular existing Playwright tooling or templates. |
+| [38. Supplemental Module 33 - Best and Popular Playwright Framework Options by Scenario](#38-supplemental-module-33---best-and-popular-playwright-framework-options-by-scenario) | Describes recommended Playwright framework approaches for UI testing, API testing, BDD, visual testing, CI, Docker, enterprise use, and quick projects. |
+| [39. Supplemental Module 34 - Thorough CI/CD Strategy for Playwright](#39-supplemental-module-34---thorough-cicd-strategy-for-playwright) | Adds detailed CI/CD pipeline stages, artifacts, secrets, browser install, matrix runs, quality gates, and GitHub Actions examples. |
+| [40. Supplemental Module 35 - Thorough API Testing Strategy](#40-supplemental-module-35---thorough-api-testing-strategy) | Adds detailed API testing design, request clients, fixtures, schemas, auth headers, CRUD tests, cleanup, negative tests, and expected results. |
+| [41. Supplemental Module 36 - Thorough Login Testing Strategy](#41-supplemental-module-36---thorough-login-testing-strategy) | Adds login test coverage for valid login, invalid login, locked users, session reuse, storage state, logout, MFA notes, and secure credentials. |
+| [42. Playwright Automation Top 20 Interview Questions and Answers](#42-playwright-automation-top-20-interview-questions-and-answers) | Provides top Playwright interview Q&A covering framework concepts, contexts, locators, auto-waiting, assertions, POM, API testing, network mocking, CI, and debugging. |
+| [43. Best Practices and Troubleshooting](#43-best-practices-and-troubleshooting) | Summarizes Playwright best practices and fixes for missing browsers, flaky locators, login failures, 401s, downloads, and CI differences. |
+| [44. Author](#44-author) | Lists author credit for Brian McCarthy and the Playwright automation showcase. |
 
 ---
 
 ## 1. Project Overview
 
-This repository demonstrates browser automation and test engineering with Playwright for Python. It starts with installation and browser launch scripts, then progresses into locators, actions, event handling, authentication, automated email checking, Pytest, plugin fixtures, Playwright debugging tools, web-first assertions, UI challenge automation, custom fixtures, Page Object Model, network events, API testing, performance optimization, GitHub API automation, CI, data-driven testing, and BDD.
+This repository demonstrates browser automation and test engineering with Playwright for Python. It starts with installation and browser launch scripts, then progresses into locators, actions, event handling, authentication, automated email checking, Pytest, plugin fixtures, Playwright debugging tools, web-first assertions, UI challenge automation, custom fixtures, Page Object Model, network events, API testing, performance optimization, GitHub API automation, CI/CD, data-driven testing, BDD, Docker, and visual validation.
 
-The repository is designed as a practical learning and portfolio project. It shows that the author can create reliable UI tests, API tests, reusable fixtures, maintainable page objects, CI-ready automation, and scalable test patterns.
+The repository is designed as a practical learning and portfolio project. It shows that the author can create reliable UI tests, API tests, login tests, reusable fixtures, maintainable page objects, CI-ready automation, Docker-compatible runs, and scalable framework patterns.
 
 ---
 
@@ -65,7 +71,7 @@ The repository is designed as a practical learning and portfolio project. It sho
 
 1. Demonstrate Playwright automation in Python.
 2. Show reliable locator strategies for modern web apps.
-3. Use realistic user actions: clicks, text input, file upload, dropdowns, keyboard shortcuts, and hover.
+3. Use realistic user actions: clicks, text input, file upload, dropdowns, keyboard shortcuts, hover, and drag-and-drop.
 4. Handle auto-waiting, navigation, dialogs, downloads, asynchronous operations, and events.
 5. Save and reuse authentication state.
 6. Build Pytest test cases with fixtures and scoped setup.
@@ -75,9 +81,10 @@ The repository is designed as a practical learning and portfolio project. It sho
 10. Test APIs with Playwright request contexts.
 11. Mock and intercept network requests.
 12. Improve runtime with optimization patterns.
-13. Run tests in GitHub Actions.
+13. Run tests in CI/CD using GitHub Actions.
 14. Expand coverage using data-driven and BDD techniques.
-15. Add supplemental coverage for environment setup, JavaScript/TypeScript fundamentals, advanced widgets, framework architecture, reporting, Docker, and visual validation.
+15. Build or evaluate custom Playwright framework architecture.
+16. Add supplemental coverage for environment setup, JavaScript/TypeScript fundamentals, advanced widgets, reporting, Docker, and visual validation.
 
 ---
 
@@ -90,11 +97,15 @@ The repository is designed as a practical learning and portfolio project. It sho
 | Pytest | Test discovery, test execution, fixtures, parametrization, and reporting |
 | pytest-playwright | Plugin-provided browser/page/context fixtures and command-line browser options |
 | Behave | BDD feature files and Given/When/Then step definitions |
+| Faker | Test data generation |
+| python-dotenv | Environment configuration from `.env` files |
+| pytest-xdist | Parallel test execution |
+| pytest-rerunfailures | Controlled retry behavior for unstable external dependencies |
 | GitHub API | Authenticated API automation practice |
-| GitHub Actions | Continuous integration execution |
-| JavaScript / TypeScript concepts | Supplemental understanding for Playwright users who read JS/TS examples or migrate frameworks |
+| GitHub Actions | Continuous integration and delivery execution |
 | Docker | Containerized test execution |
 | Visual comparison tools | Screenshot comparison and visual regression workflows |
+| JavaScript / TypeScript concepts | Supplemental understanding for users who read JS/TS Playwright examples or migrate frameworks |
 
 ---
 
@@ -129,19 +140,21 @@ The repository is designed as a practical learning and portfolio project. It sho
 ## 5. Core Commands
 
 ```bash
-pip install pytest playwright pytest-playwright behave
+pip install pytest playwright pytest-playwright behave faker python-dotenv pytest-xdist pytest-rerunfailures
 playwright install
 pytest
 pytest --headed
 pytest --browser chromium
 pytest path/to/test_file.py
 pytest -k login
+pytest -m smoke
+pytest -n auto
 pytest --tracing on
 playwright show-trace trace.zip
 behave
 ```
 
-**Expected result:** Dependencies install, Playwright browsers are downloaded, tests are discovered by Pytest or Behave, and pass/fail results are printed in the terminal.
+**Expected result:** Dependencies install, Playwright browsers are downloaded, Pytest/Behave discover tests, and pass/fail results are printed in the terminal.
 
 ---
 
@@ -372,15 +385,7 @@ def test_assertions(page):
     expect(page.get_by_label("Email")).to_have_value("user@example.com")
 ```
 
-```python
-import pytest
-
-def test_soft_assertion_style():
-    pytest.assume(1 == 1)
-    pytest.assume("qa" in "automation qa")
-```
-
-**Expected result:** Playwright waits for UI states automatically; soft assertion plugins can collect multiple assertion failures before ending a test.
+**Expected result:** Playwright waits for UI states automatically and fails only if expected conditions are not met within timeout.
 
 ---
 
@@ -437,7 +442,7 @@ def test_dashboard(logged_in_page):
 **Subtopics covered:** POM concept, implementation, usage, Playwright homepage POM, and POM tests.
 
 ```python
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
 
 class LoginPage:
     def __init__(self, page: Page):
@@ -455,7 +460,7 @@ class LoginPage:
         self.submit.click()
 ```
 
-**Expected result:** Tests call meaningful methods instead of repeating locator code.
+**Expected result:** Tests call meaningful page methods instead of repeating locator code.
 
 ---
 
@@ -660,21 +665,17 @@ def verify_dashboard(context):
 
 ## 27. Supplemental Module 22 - Playwright vs Cypress
 
-**Why this was added:** The additional table of contents includes Playwright vs Cypress comparison material that was not previously covered.
-
-**What to know:** Playwright and Cypress both automate browsers, but their architecture and strengths differ.
+**Why this was added:** Playwright and Cypress are both popular browser automation tools, but they fit different scenarios.
 
 | Topic | Playwright | Cypress |
 |---|---|---|
-| Browser support | Chromium, Firefox, WebKit | Primarily Chromium-family and Firefox support depending on version/config |
-| Multi-tab/multi-context | Strong browser context support | More constrained by Cypress architecture |
-| API testing | Built-in request context | Available through Cypress request commands |
-| Auto-waiting | Built into actions and assertions | Built into Cypress command chain |
-| Language style | Python, TypeScript, JavaScript, Java, .NET | JavaScript / TypeScript |
-| Best fit | Cross-browser E2E, API + UI, complex browser flows | Front-end developer workflow, fast component/E2E workflows |
+| Browser support | Chromium, Firefox, WebKit | Best known for Chromium-family browsers; Firefox support also exists |
+| Multi-context support | Strong isolated browser contexts | More constrained architecture |
+| Language ecosystem | Python, TypeScript, JavaScript, Java, .NET | JavaScript and TypeScript |
+| API testing | Built-in request context | `cy.request()` |
+| Best fit | Cross-browser E2E, UI + API, complex auth, network mocking | Front-end developer workflow and JS/TS app testing |
 
 ```python
-# Playwright-style Python test
 from playwright.sync_api import expect
 
 def test_playwright_style(page):
@@ -683,68 +684,49 @@ def test_playwright_style(page):
 ```
 
 ```javascript
-// Cypress-style JavaScript comparison
 it('checks heading', () => {
   cy.visit('https://example.com')
   cy.get('h1').should('be.visible')
 })
 ```
 
-**Expected result:** Both tests open a page and validate a heading, but the syntax and runtime model differ.
+**Expected result:** Both tests validate a heading, but Playwright and Cypress use different runtime models and syntax.
 
 ---
 
 ## 28. Supplemental Module 23 - Development Environment, Test Application, and JavaScript TypeScript Fundamentals
 
-**Why this was added:** The additional outline includes VS Code, Git, Node.js, cloning a test app, JavaScript fundamentals, and TypeScript vs JavaScript material.
-
-**What to know:** This Python repository does not require JavaScript to write tests, but many Playwright examples online use JavaScript or TypeScript. Understanding basic JS/TS helps users read broader Playwright documentation and compare implementations.
-
 ```bash
-# Environment checks
 python --version
 git --version
 node --version
 code --version
-
-# Clone a test app or automation repo
-git clone https://github.com/example/pw-test-app.git
-cd pw-test-app
 ```
 
 ```javascript
-// JavaScript variables, constants, arrays, objects, and functions
 const user = { name: 'Brian', role: 'QA' }
 const skills = ['Playwright', 'Pytest', 'API Testing']
-
 function formatUser(profile) {
   return `${profile.name} works in ${profile.role}`
 }
-
 console.log(formatUser(user))
 console.log(skills.join(', '))
 ```
 
 ```typescript
-// TypeScript adds static typing
 interface UserProfile {
   name: string
   role: string
 }
-
 const user: UserProfile = { name: 'Brian', role: 'QA' }
 console.log(user.name)
 ```
 
-**Expected result:** The environment commands confirm installed tools. JavaScript and TypeScript examples show how variables, arrays, objects, functions, imports/exports, classes, and types relate to Playwright examples written in JS/TS.
+**Expected result:** The environment commands confirm installed tools. JavaScript and TypeScript examples help users understand Playwright examples written in JS/TS.
 
 ---
 
 ## 29. Supplemental Module 24 - DOM Terminology and Advanced Locator Architecture
-
-**Why this was added:** The uploaded outline includes DOM terminology, parent/child locators, filters, extracting values, timeouts, and soft assertions as specific topics.
-
-**What to know:** The DOM is the browser's structured representation of HTML. Elements have tags, attributes, IDs, classes, text, parent/child relationships, and sometimes hidden or dynamic state.
 
 ```html
 <section id="profile" class="card">
@@ -763,7 +745,6 @@ def test_dom_and_advanced_locators(page):
         <button data-testid="save-profile">Save</button>
       </section>
     ''')
-
     card = page.locator("section.card").filter(has_text="Profile")
     button = card.get_by_test_id("save-profile")
     expect(button).to_have_text("Save")
@@ -772,28 +753,15 @@ def test_dom_and_advanced_locators(page):
 ```python
 def test_extract_values(page):
     page.set_content('<input id="email" value="user@example.com"><p class="status">Ready</p>')
-    email_value = page.locator("#email").input_value()
-    status_text = page.locator(".status").inner_text()
-    assert email_value == "user@example.com"
-    assert status_text == "Ready"
+    assert page.locator("#email").input_value() == "user@example.com"
+    assert page.locator(".status").inner_text() == "Ready"
 ```
 
-```python
-def test_timeout_configuration(page):
-    page.set_default_timeout(5000)
-    page.set_default_navigation_timeout(10000)
-    page.goto("https://example.com")
-```
-
-**Expected result:** Tests select elements by DOM structure, parent/child relationships, filtered text, test IDs, extracted values, and explicit timeout settings.
+**Expected result:** Tests select elements by DOM structure, parent/child relationships, filtered text, test IDs, and extracted values.
 
 ---
 
 ## 30. Supplemental Module 25 - Advanced UI Widgets and Complex Interactions
-
-**Why this was added:** The additional outline includes tooltips, web tables, date pickers, sliders, drag-and-drop, iframes, and overlapped elements.
-
-### Tooltip Example
 
 ```python
 from playwright.sync_api import expect
@@ -804,10 +772,6 @@ def test_tooltip(page):
     expect(page.get_by_role("tooltip")).to_contain_text("Helpful information")
 ```
 
-**Expected result:** Hovering displays the tooltip and the assertion validates the tooltip text.
-
-### Web Table Example
-
 ```python
 def test_table_row_by_column(page):
     page.goto("https://example.com/users")
@@ -816,56 +780,18 @@ def test_table_row_by_column(page):
     row.get_by_role("button", name="Edit").click()
 ```
 
-**Expected result:** The test finds the correct table row by known column text and interacts with a button inside that row.
-
-### Date Picker Example
-
-```python
-from datetime import date, timedelta
-
-def test_date_picker(page):
-    future_date = date.today() + timedelta(days=7)
-    page.goto("https://example.com/date-picker")
-    page.get_by_label("Date").click()
-    page.get_by_text(str(future_date.day), exact=True).click()
-    expect(page.get_by_label("Date")).not_to_have_value("")
-```
-
-**Expected result:** The test selects a future day and confirms the input has a selected value.
-
-### Slider Example
-
-```python
-def test_slider(page):
-    page.goto("https://example.com/slider")
-    slider = page.locator("input[type='range']")
-    slider.evaluate("element => element.value = 75")
-    slider.dispatch_event("input")
-    assert slider.input_value() == "75"
-```
-
-**Expected result:** JavaScript evaluation changes the slider value and dispatches the input event.
-
-### iFrame and Drag-and-Drop Example
-
 ```python
 def test_iframe_drag_drop(page):
     page.goto("https://example.com/iframe-dragdrop")
     frame = page.frame_locator("iframe[name='demo-frame']")
-    source = frame.locator("#source")
-    target = frame.locator("#target")
-    source.drag_to(target)
+    frame.locator("#source").drag_to(frame.locator("#target"))
 ```
 
-**Expected result:** Playwright switches into the iframe with `frame_locator()` and performs drag-and-drop inside the frame.
+**Expected result:** The examples demonstrate hover, table-row targeting, iframe handling, and drag-and-drop interactions.
 
 ---
 
 ## 31. Supplemental Module 26 - Advanced Page Object Architecture
-
-**Why this was added:** The additional outline includes page object manager, helper base class, private helper methods, parametrized methods, and final framework architecture.
-
-**What to know:** Basic POM centralizes one page. Advanced POM architecture adds shared helpers and a page manager that initializes all page objects in one place.
 
 ```python
 from playwright.sync_api import Page, expect
@@ -887,14 +813,9 @@ class NavigationPage(BasePage):
             menu_button.click()
         self.page.get_by_role("link", name=item).click()
 
-class DatePickerPage(BasePage):
-    def select_day(self, day: int):
-        self.page.get_by_text(str(day), exact=True).click()
-
 class PageManager:
     def __init__(self, page: Page):
         self.navigation = NavigationPage(page)
-        self.date_picker = DatePickerPage(page)
 ```
 
 ```python
@@ -902,7 +823,6 @@ def test_page_manager(page):
     app = PageManager(page)
     app.navigation.open("/")
     app.navigation.open_menu_item("Forms", "Date Picker")
-    app.date_picker.select_day(15)
 ```
 
 **Expected result:** Tests use high-level objects instead of directly managing every page class or locator.
@@ -910,10 +830,6 @@ def test_page_manager(page):
 ---
 
 ## 32. Supplemental Module 27 - Advanced API State, Mocking, Authentication, and Cleanup
-
-**Why this was added:** The outline includes API mock, response modification, API preconditions, API authentication, sharing auth state, and cleanup using intercepted browser responses.
-
-### API Authentication Precondition
 
 ```python
 import json
@@ -923,32 +839,10 @@ def create_auth_state_with_api(playwright: Playwright):
     api = playwright.request.new_context(base_url="https://example.com")
     token_response = api.post("/api/login", data={"email": "user@example.com", "password": "password"})
     token = token_response.json()["token"]
-
     with open("auth_token.json", "w") as file:
         json.dump({"token": token}, file)
-
     api.dispose()
 ```
-
-**Expected result:** The API login returns a token and stores it in a JSON file that later tests can use.
-
-### Create Precondition with API, Validate with UI
-
-```python
-def test_create_article_api_then_delete_ui(playwright, page):
-    api = playwright.request.new_context(base_url="https://example.com/api")
-    created = api.post("/articles", data={"title": "Playwright API Setup"})
-    article_id = created.json()["id"]
-
-    page.goto(f"https://example.com/articles/{article_id}")
-    page.get_by_role("button", name="Delete").click()
-
-    api.dispose()
-```
-
-**Expected result:** Test data is created quickly through the API and then exercised through the UI.
-
-### Intercept Browser Response and Clean Up with API
 
 ```python
 def test_ui_create_then_api_cleanup(page, playwright):
@@ -956,22 +850,17 @@ def test_ui_create_then_api_cleanup(page, playwright):
         page.goto("https://example.com/articles/new")
         page.get_by_label("Title").fill("Temporary Article")
         page.get_by_role("button", name="Save").click()
-
     article_id = response_info.value.json()["id"]
     api = playwright.request.new_context(base_url="https://example.com/api")
     api.delete(f"/articles/{article_id}")
     api.dispose()
 ```
 
-**Expected result:** The UI creates data, the test captures the created ID from the browser API response, and the API deletes the data during cleanup.
+**Expected result:** API calls create state quickly, UI tests validate user-facing behavior, and cleanup removes generated data.
 
 ---
 
 ## 33. Supplemental Module 28 - Advanced Framework Configuration, Environment Variables, Retries, Tags, and Test Data
-
-**Why this was added:** The outline includes custom scripts, Faker data generation, retries, parallelism, environment variables, configuration files, custom fixtures, project setup/teardown, global setup/teardown, and tags.
-
-### Environment Variables with `.env`
 
 ```python
 import os
@@ -982,41 +871,21 @@ BASE_URL = os.getenv("BASE_URL", "https://example.com")
 TEST_USER = os.getenv("TEST_USER")
 ```
 
-**Expected result:** Values can be configured without hard-coding secrets or URLs.
-
-### Faker Test Data
-
 ```python
 from faker import Faker
-
 fake = Faker()
 
 def test_generated_user_data():
     email = fake.email()
-    username = fake.user_name()
     assert "@" in email
-    assert len(username) > 0
 ```
 
-**Expected result:** Each run can create unique data and reduce collisions in test environments.
-
-### Retries and Tags in Pytest
-
 ```ini
-# pytest.ini
 [pytest]
 markers =
     smoke: critical smoke tests
     regression: broader regression tests
 addopts = --maxfail=1
-```
-
-```python
-import pytest
-
-@pytest.mark.smoke
-def test_smoke_login():
-    assert True
 ```
 
 ```bash
@@ -1025,42 +894,19 @@ pytest --reruns 2
 pytest -n 2
 ```
 
-**Expected result:** Tests can be filtered by marker, retried when configured with retry plugins, and distributed across workers when `pytest-xdist` is installed.
-
-### Global Setup/Teardown Style Fixture
-
-```python
-import pytest
-
-@pytest.fixture(scope="session", autouse=True)
-def global_test_setup():
-    print("Starting automation suite")
-    yield
-    print("Ending automation suite")
-```
-
-**Expected result:** Setup runs before the test session and teardown runs after all tests finish.
+**Expected result:** Tests can use environment-specific configuration, generated test data, filtered test execution, retries, and parallel workers.
 
 ---
 
 ## 34. Supplemental Module 29 - Reporting, Screenshots, Videos, and Visual Testing
 
-**Why this was added:** The outline includes screenshots, videos, reporting, built-in visual testing, component visual checks, accuracy adjustment, snapshot updates, and third-party reports.
-
-### Screenshot and Buffer Example
-
 ```python
 def test_page_and_element_screenshot(page):
     page.goto("https://example.com")
     page.screenshot(path="artifacts/page.png", full_page=True)
-    logo = page.locator("img").first
-    image_bytes = logo.screenshot()
+    image_bytes = page.locator("img").first.screenshot()
     assert len(image_bytes) > 0
 ```
-
-**Expected result:** A full-page screenshot is saved, and an element screenshot is stored in memory as bytes.
-
-### Video Recording Context
 
 ```python
 def test_video_recording(browser):
@@ -1069,10 +915,6 @@ def test_video_recording(browser):
     page.goto("https://example.com")
     context.close()
 ```
-
-**Expected result:** Playwright records a video for the browser context and saves it after context close.
-
-### Visual Snapshot Testing
 
 ```python
 from playwright.sync_api import expect
@@ -1083,42 +925,25 @@ def test_visual_snapshot(page):
 ```
 
 ```bash
+pytest --junitxml=reports/junit.xml
+pytest --html=reports/report.html
 pytest --update-snapshots
 ```
 
-**Expected result:** Playwright compares the current screenshot to the baseline image. The update command refreshes baseline snapshots when UI changes are intentional.
-
-### Reporting Commands
-
-```bash
-pytest --junitxml=reports/junit.xml
-pytest --html=reports/report.html
-allure generate allure-results -o allure-report --clean
-```
-
-**Expected result:** Test results are exported for CI dashboards, HTML reports, or Allure reporting.
+**Expected result:** Screenshots, videos, visual baselines, and machine-readable reports are produced for debugging and CI evidence.
 
 ---
 
 ## 35. Supplemental Module 30 - Docker, GitHub Actions, and Argos CI
 
-**Why this was added:** The outline includes running Playwright in Docker, Dockerfile, docker-compose, saving reports from a container, GitHub Actions for pull requests, and Argos CI visual validation.
-
-### Dockerfile Example
-
 ```dockerfile
 FROM mcr.microsoft.com/playwright/python:v1.45.0-jammy
-
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . .
 CMD ["pytest", "--junitxml=reports/junit.xml"]
 ```
-
-**Expected result:** The container has browser dependencies and runs the Pytest suite inside a consistent environment.
-
-### docker-compose Example
 
 ```yaml
 services:
@@ -1132,22 +957,330 @@ services:
 
 ```bash
 docker compose up --build
+npx argos upload screenshots
 ```
 
-**Expected result:** Tests run in the container and reports are saved back to the host `reports` folder.
+**Expected result:** Tests run in a consistent container, reports are mapped back to the host, and visual screenshots can be uploaded to a visual validation service.
 
-### GitHub Actions with Visual Report Upload
+---
+
+## 36. Supplemental Module 31 - Building a Playwright Framework from Scratch
+
+A Playwright framework is needed when a team wants reusable structure beyond one-off scripts. A good framework standardizes setup, browser configuration, fixtures, page objects, test data, reporting, CI/CD, retries, artifacts, environment switching, login state, and API helpers.
+
+### When to Build a Custom Framework
+
+Build a custom framework when:
+
+- The test suite will grow beyond a few simple tests.
+- Multiple QA engineers or developers will contribute tests.
+- The project needs common login, data setup, cleanup, and reporting.
+- The team must support multiple environments such as dev, QA, staging, and production smoke checks.
+- The app needs Page Object Model or Screenplay-style abstraction.
+- Tests must run in CI/CD with artifacts and quality gates.
+- API and UI tests need shared fixtures and authentication.
+
+Avoid building a heavy framework when:
+
+- The project only needs a few smoke tests.
+- The team is still exploring Playwright basics.
+- A generated Playwright/Pytest starter is sufficient.
+- Maintenance cost would exceed the value of abstraction.
+
+### Required Files and Folder Structure
+
+```text
+playwright-python-framework/
+├── README.md
+├── requirements.txt
+├── pytest.ini
+├── .env.example
+├── .gitignore
+├── conftest.py
+├── pages/
+│   ├── __init__.py
+│   ├── base_page.py
+│   ├── login_page.py
+│   └── dashboard_page.py
+├── tests/
+│   ├── ui/
+│   │   └── test_login.py
+│   ├── api/
+│   │   └── test_users_api.py
+│   └── smoke/
+│       └── test_homepage.py
+├── utils/
+│   ├── __init__.py
+│   ├── config.py
+│   ├── data_factory.py
+│   └── api_client.py
+├── test_data/
+│   └── users.json
+├── artifacts/
+│   ├── screenshots/
+│   ├── videos/
+│   └── traces/
+└── .github/
+    └── workflows/
+        └── playwright-tests.yml
+```
+
+### Requirements File
+
+```text
+pytest
+playwright
+pytest-playwright
+python-dotenv
+faker
+pytest-xdist
+pytest-rerunfailures
+pytest-html
+```
+
+### Step-by-Step Framework Build
+
+1. Create the repository and virtual environment.
+2. Install dependencies.
+3. Install Playwright browsers.
+4. Add `pytest.ini` for markers and default options.
+5. Add `.env.example` for environment variables.
+6. Create `utils/config.py` for environment configuration.
+7. Create `conftest.py` for fixtures.
+8. Create `pages/base_page.py` for shared page methods.
+9. Create page objects for each major application screen.
+10. Create UI tests under `tests/ui/`.
+11. Create API tests under `tests/api/`.
+12. Add screenshots, traces, and videos for failure evidence.
+13. Add smoke/regression markers.
+14. Add GitHub Actions workflow.
+15. Add README instructions for setup and execution.
+
+### `pytest.ini`
+
+```ini
+[pytest]
+addopts = -ra --browser chromium --tracing retain-on-failure
+markers =
+    smoke: critical smoke tests
+    regression: full regression tests
+    login: login and authentication tests
+    api: API tests
+    ui: UI tests
+```
+
+### `.env.example`
+
+```text
+BASE_URL=https://example.com
+API_BASE_URL=https://example.com/api
+TEST_USER_EMAIL=user@example.com
+TEST_USER_PASSWORD=password
+GITHUB_TOKEN=replace_me
+```
+
+### `utils/config.py`
+
+```python
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+class Settings:
+    BASE_URL = os.getenv("BASE_URL", "https://example.com")
+    API_BASE_URL = os.getenv("API_BASE_URL", "https://example.com/api")
+    TEST_USER_EMAIL = os.getenv("TEST_USER_EMAIL", "user@example.com")
+    TEST_USER_PASSWORD = os.getenv("TEST_USER_PASSWORD", "password")
+
+settings = Settings()
+```
+
+### `conftest.py`
+
+```python
+import pytest
+from utils.config import settings
+
+@pytest.fixture(scope="session")
+def base_url():
+    return settings.BASE_URL
+
+@pytest.fixture
+def authenticated_page(page):
+    page.goto(f"{settings.BASE_URL}/login")
+    page.get_by_label("Email").fill(settings.TEST_USER_EMAIL)
+    page.get_by_label("Password").fill(settings.TEST_USER_PASSWORD)
+    page.get_by_role("button", name="Sign in").click()
+    return page
+
+@pytest.fixture(scope="session")
+def api_base_url():
+    return settings.API_BASE_URL
+```
+
+### `pages/base_page.py`
+
+```python
+from playwright.sync_api import Page, expect
+
+class BasePage:
+    def __init__(self, page: Page):
+        self.page = page
+
+    def open(self, path: str = ""):
+        self.page.goto(path)
+
+    def expect_title_contains(self, text: str):
+        expect(self.page).to_have_title(lambda title: text in title)
+
+    def click_by_role(self, role: str, name: str):
+        self.page.get_by_role(role, name=name).click()
+```
+
+### `pages/login_page.py`
+
+```python
+from playwright.sync_api import Page, expect
+from pages.base_page import BasePage
+
+class LoginPage(BasePage):
+    def __init__(self, page: Page):
+        super().__init__(page)
+        self.email = page.get_by_label("Email")
+        self.password = page.get_by_label("Password")
+        self.submit = page.get_by_role("button", name="Sign in")
+        self.error = page.get_by_role("alert")
+
+    def open_login(self, base_url: str):
+        self.page.goto(f"{base_url}/login")
+
+    def login(self, email: str, password: str):
+        self.email.fill(email)
+        self.password.fill(password)
+        self.submit.click()
+
+    def expect_error(self, message: str):
+        expect(self.error).to_contain_text(message)
+```
+
+### `tests/ui/test_login.py`
+
+```python
+import pytest
+from pages.login_page import LoginPage
+from utils.config import settings
+
+@pytest.mark.login
+@pytest.mark.ui
+def test_valid_login(page, base_url):
+    login = LoginPage(page)
+    login.open_login(base_url)
+    login.login(settings.TEST_USER_EMAIL, settings.TEST_USER_PASSWORD)
+    assert "dashboard" in page.url
+
+@pytest.mark.login
+@pytest.mark.ui
+def test_invalid_login(page, base_url):
+    login = LoginPage(page)
+    login.open_login(base_url)
+    login.login("bad@example.com", "wrong")
+    login.expect_error("Invalid")
+```
+
+**Expected result:** The framework can run UI tests, API tests, login tests, smoke tests, and regression tests consistently locally and in CI/CD.
+
+---
+
+## 37. Supplemental Module 32 - Custom Framework vs Out-of-the-Box Framework
+
+### Use a Custom Framework When
+
+| Scenario | Why Custom Helps |
+|---|---|
+| Large enterprise app | Requires shared patterns, environment switching, custom reporting, and test data management |
+| Complex login/auth | Needs storage state, API auth, multiple roles, and secure secret handling |
+| UI + API hybrid tests | Needs API setup/cleanup combined with UI validation |
+| Regulated QA evidence | Needs artifacts, traces, screenshots, reports, and repeatable evidence |
+| Multiple teams | Needs standardized POM, naming conventions, tags, and fixtures |
+
+### Use Out-of-the-Box Tooling When
+
+| Scenario | Better Option |
+|---|---|
+| Small smoke suite | `pytest-playwright` defaults are enough |
+| Learning Playwright | Simple scripts or generated code are faster |
+| Front-end JS/TS team | Official Playwright Test runner in TypeScript may be more natural |
+| BDD collaboration | Behave + Playwright or Playwright-BDD style framework |
+| Visual regression focus | Playwright screenshots + Argos, Percy, or Applitools |
+
+### Decision Rule
+
+Use the simplest framework that supports the real requirement. A custom framework should solve repeated problems, not create unnecessary abstraction.
+
+---
+
+## 38. Supplemental Module 33 - Best and Popular Playwright Framework Options by Scenario
+
+| Scenario | Recommended Framework / Approach | Why |
+|---|---|---|
+| Python UI testing | `pytest-playwright` | Best fit for Python teams using Pytest fixtures and assertions |
+| TypeScript/JavaScript UI testing | Official Playwright Test | Most feature-complete Playwright runner, strong config/projects/reporting support |
+| API testing in Python | Playwright `APIRequestContext` + Pytest | Fast backend validation with shared fixtures |
+| BDD in Python | Behave + Playwright | Good for Given/When/Then collaboration and readable acceptance tests |
+| BDD in TypeScript | Playwright-BDD / Cucumber-style approach | Good for JS/TS teams needing Gherkin |
+| Visual testing | Playwright screenshots + Argos/Percy/Applitools | Best for detecting UI regressions through screenshots |
+| Enterprise smoke/regression | Custom Pytest framework + POM + CI/CD | Supports tagging, environment control, artifacts, and standard test patterns |
+| Fast PR validation | Official Playwright Test or Pytest markers | Run only smoke/high-risk tests on pull requests |
+| Dockerized automation | Playwright Docker image | Consistent browser dependencies and reproducible runs |
+| Cross-browser validation | Playwright projects or Pytest browser matrix | Validate Chromium, Firefox, and WebKit behavior |
+
+### Popular Framework Choices
+
+1. **Official Playwright Test for TypeScript/JavaScript**: Best all-around Playwright-native test runner.
+2. **pytest-playwright for Python**: Best for Python QA automation teams and Pytest-based test suites.
+3. **Behave + Playwright Python**: Best when stakeholders want Gherkin scenarios.
+4. **Playwright + Page Object Model**: Best maintainability pattern for medium/large UI suites.
+5. **Playwright + APIRequestContext**: Best for API + UI hybrid automation.
+6. **Playwright + Docker + GitHub Actions**: Best for reproducible CI execution.
+7. **Playwright + Argos/Percy/Applitools**: Best for visual regression workflows.
+
+---
+
+## 39. Supplemental Module 34 - Thorough CI/CD Strategy for Playwright
+
+A strong CI/CD pipeline makes Playwright tests repeatable, observable, and useful as a quality gate.
+
+### Recommended CI/CD Stages
+
+1. **Checkout source code**.
+2. **Set up Python**.
+3. **Install Python dependencies**.
+4. **Install Playwright browsers and OS dependencies**.
+5. **Run linting or formatting checks**.
+6. **Run smoke tests first**.
+7. **Run regression tests or browser matrix if needed**.
+8. **Upload artifacts: traces, screenshots, videos, reports**.
+9. **Publish test results**.
+10. **Fail the workflow when critical tests fail**.
+
+### GitHub Actions Workflow
 
 ```yaml
-name: Playwright Tests
+name: Playwright Python CI
 
 on:
   pull_request:
   push:
+    branches: [ main ]
 
 jobs:
-  test:
+  smoke:
     runs-on: ubuntu-latest
+    env:
+      BASE_URL: ${{ secrets.BASE_URL }}
+      TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+      TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -1155,27 +1288,267 @@ jobs:
           python-version: '3.11'
       - run: pip install -r requirements.txt
       - run: playwright install --with-deps
-      - run: pytest --junitxml=reports/junit.xml
+      - run: pytest -m smoke --tracing retain-on-failure --junitxml=reports/smoke-results.xml
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: playwright-reports
-          path: reports/
+          name: smoke-artifacts
+          path: |
+            reports/
+            test-results/
+            artifacts/
+
+  regression:
+    needs: smoke
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - run: playwright install --with-deps
+      - run: pytest -m regression --browser ${{ matrix.browser }} --tracing retain-on-failure
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: regression-${{ matrix.browser }}-artifacts
+          path: |
+            test-results/
+            reports/
+            artifacts/
 ```
 
-**Expected result:** Every push or pull request runs the tests and stores report artifacts.
+### CI/CD Best Practices
 
-### Argos CI Concept
-
-```bash
-# Conceptual example for visual validation workflow
-npx argos upload screenshots
-```
-
-**Expected result:** Screenshots are uploaded to a visual review service for baseline comparison and pull-request validation.
+- Run smoke tests on every PR.
+- Run full regression on scheduled builds or before releases.
+- Store secrets in GitHub repository secrets.
+- Never commit `.env`, passwords, tokens, or real auth state.
+- Upload traces and screenshots on failure.
+- Use browser matrix only when cross-browser coverage is valuable.
+- Keep CI tests independent so they can run in parallel.
+- Use API setup/cleanup instead of manual test data dependencies.
+- Use stable test accounts and dedicated test environments.
 
 ---
 
-## 36. Playwright Automation Top 20 Interview Questions and Answers
+## 40. Supplemental Module 35 - Thorough API Testing Strategy
+
+API tests validate backend behavior quickly and can also support UI tests by creating setup data and cleaning up test data.
+
+### Recommended API Test Structure
+
+```text
+tests/api/
+├── test_auth_api.py
+├── test_users_api.py
+├── test_tasks_api.py
+└── test_negative_api.py
+utils/
+├── api_client.py
+└── schemas.py
+```
+
+### API Client Helper
+
+```python
+from playwright.sync_api import Playwright, APIRequestContext
+
+class ApiClient:
+    def __init__(self, playwright: Playwright, base_url: str, token: str | None = None):
+        headers = {"Accept": "application/json"}
+        if token:
+            headers["Authorization"] = f"Bearer {token}"
+        self.context: APIRequestContext = playwright.request.new_context(
+            base_url=base_url,
+            extra_http_headers=headers
+        )
+
+    def get_user(self, user_id: int):
+        return self.context.get(f"/users/{user_id}")
+
+    def create_user(self, payload: dict):
+        return self.context.post("/users", data=payload)
+
+    def delete_user(self, user_id: int):
+        return self.context.delete(f"/users/{user_id}")
+
+    def dispose(self):
+        self.context.dispose()
+```
+
+### API Fixture
+
+```python
+import pytest
+from utils.api_client import ApiClient
+from utils.config import settings
+
+@pytest.fixture
+def api_client(playwright):
+    client = ApiClient(playwright, settings.API_BASE_URL)
+    yield client
+    client.dispose()
+```
+
+### CRUD Test
+
+```python
+def test_create_read_delete_user(api_client):
+    payload = {"name": "Brian", "role": "QA"}
+    created = api_client.create_user(payload)
+    assert created.status in [200, 201]
+    created_body = created.json()
+    user_id = created_body["id"]
+
+    fetched = api_client.get_user(user_id)
+    assert fetched.ok
+    assert fetched.json()["name"] == "Brian"
+
+    deleted = api_client.delete_user(user_id)
+    assert deleted.status in [200, 202, 204]
+```
+
+### Negative API Test
+
+```python
+def test_create_user_missing_required_name(api_client):
+    response = api_client.create_user({"role": "QA"})
+    assert response.status in [400, 422]
+```
+
+### API Testing Checklist
+
+| Area | What to Validate |
+|---|---|
+| Status codes | 200, 201, 204, 400, 401, 403, 404, 409, 422, 500 handling |
+| Response body | Required fields, correct values, correct types |
+| Headers | Content type, auth, caching, correlation IDs if used |
+| Auth | Missing token, invalid token, expired token, role-based access |
+| Query strings | Filtering, sorting, pagination, limits |
+| CRUD | Create, read, update, patch, delete, cleanup |
+| Negative tests | Missing fields, invalid values, invalid IDs, duplicate records |
+| Data cleanup | Delete generated data after tests |
+| Contract checks | Schema expectations and required fields |
+
+---
+
+## 41. Supplemental Module 36 - Thorough Login Testing Strategy
+
+Login testing is one of the most important workflows because many applications depend on authenticated user sessions.
+
+### Login Scenarios to Cover
+
+| Scenario | Expected Result |
+|---|---|
+| Valid username/password | User reaches dashboard or authenticated landing page |
+| Invalid password | Error message is displayed and user remains logged out |
+| Invalid username | Error message is displayed and user remains logged out |
+| Empty username/password | Required field validation appears |
+| Locked user | Locked-account message appears |
+| Disabled user | Access denied or account disabled message appears |
+| Logout | Session ends and protected pages redirect to login |
+| Session reuse | Saved storage state opens authenticated pages without logging in again |
+| Expired session | User is redirected to login or receives session-expired message |
+| Role-based login | User sees only permissions allowed for the role |
+
+### Page Object for Login Testing
+
+```python
+from playwright.sync_api import Page, expect
+
+class LoginPage:
+    def __init__(self, page: Page):
+        self.page = page
+        self.email = page.get_by_label("Email")
+        self.password = page.get_by_label("Password")
+        self.sign_in = page.get_by_role("button", name="Sign in")
+        self.error = page.get_by_role("alert")
+
+    def open(self, base_url: str):
+        self.page.goto(f"{base_url}/login")
+
+    def login(self, email: str, password: str):
+        self.email.fill(email)
+        self.password.fill(password)
+        self.sign_in.click()
+
+    def expect_error(self, message: str):
+        expect(self.error).to_contain_text(message)
+```
+
+### Valid Login Test
+
+```python
+from utils.config import settings
+from pages.login_page import LoginPage
+
+
+def test_valid_login(page, base_url):
+    login = LoginPage(page)
+    login.open(base_url)
+    login.login(settings.TEST_USER_EMAIL, settings.TEST_USER_PASSWORD)
+    assert "dashboard" in page.url
+```
+
+**Expected result:** The user lands on the dashboard or another authenticated page.
+
+### Invalid Login Test
+
+```python
+def test_invalid_login_shows_error(page, base_url):
+    login = LoginPage(page)
+    login.open(base_url)
+    login.login("bad@example.com", "wrong-password")
+    login.expect_error("Invalid")
+```
+
+**Expected result:** The app displays an invalid-login message and does not enter the authenticated area.
+
+### Logout Test
+
+```python
+def test_logout_ends_session(authenticated_page):
+    authenticated_page.get_by_role("button", name="Account").click()
+    authenticated_page.get_by_role("menuitem", name="Logout").click()
+    assert "login" in authenticated_page.url
+```
+
+**Expected result:** The user is redirected to login and protected pages should no longer be accessible.
+
+### Storage State Login Reuse
+
+```python
+# One-time setup after successful login
+context.storage_state(path="auth_state.json")
+
+# Reuse in tests
+context = browser.new_context(storage_state="auth_state.json")
+page = context.new_page()
+page.goto("https://example.com/dashboard")
+```
+
+**Expected result:** Tests start authenticated without repeating UI login.
+
+### Login Testing Best Practices
+
+- Use test-only accounts, not personal accounts.
+- Store credentials in secrets or `.env` files ignored by Git.
+- Avoid testing real MFA unless a test MFA bypass or automation-safe method exists.
+- Keep one or two UI login tests, then reuse storage state for most authenticated tests.
+- Test authorization separately from authentication.
+- Use API login where possible for fast setup.
+- Validate both success and failure paths.
+- Confirm logout destroys or invalidates the active session.
+
+---
+
+## 42. Playwright Automation Top 20 Interview Questions and Answers
 
 ### 1. What is Playwright?
 
@@ -1259,7 +1632,7 @@ Data-driven testing runs the same test logic with multiple input values and expe
 
 ---
 
-## 37. Best Practices and Troubleshooting
+## 43. Best Practices and Troubleshooting
 
 ### Best Practices
 
@@ -1273,6 +1646,8 @@ Data-driven testing runs the same test logic with multiple input values and expe
 8. Save authentication state for repeated authenticated tests.
 9. Capture traces, screenshots, and videos for debugging.
 10. Keep CI tests deterministic, independent, and headless by default.
+11. Use custom frameworks only when repeated complexity justifies the maintenance cost.
+12. Keep smoke tests fast and regression tests broader.
 
 ### Troubleshooting
 
@@ -1286,10 +1661,11 @@ Data-driven testing runs the same test logic with multiple input values and expe
 | Download test fails | Event not wrapped correctly | Use `page.expect_download()` before clicking |
 | File upload fails | Bad path | Use repo-relative file paths |
 | Test passes locally but fails in CI | Environment mismatch | Run locally headless and capture traces |
+| Custom framework becomes hard to maintain | Too much abstraction | Simplify fixtures, remove unused helpers, and keep tests readable |
 
 ---
 
-## 38. Author
+## 44. Author
 
 **Brian McCarthy**  
 Playwright Automation with Python and Pytest Showcase
