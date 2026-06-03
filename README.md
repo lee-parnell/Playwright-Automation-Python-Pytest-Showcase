@@ -2,9 +2,9 @@
 
 **Written by Brian McCarthy**
 
-A complete hands-on Playwright automation guide using **Python**, **Pytest**, `pytest-playwright`, Page Object Model design, fixtures, web-first assertions, API testing, network interception, CI execution, data-driven testing, and behavior-driven development.
+A complete hands-on Playwright automation guide using **Python**, **Pytest**, `pytest-playwright`, Page Object Model design, fixtures, web-first assertions, API testing, network interception, CI execution, data-driven testing, behavior-driven development, and supplemental advanced automation topics.
 
-This README is organized as a detailed numbered tutorial. Each module explains the purpose of the module, the subtopics covered, what the user needs to know, practical code examples, and expected results.
+This README is organized as a numbered tutorial. Existing sections cover the main Python Playwright/Pytest modules. Supplemental modules were added only for subject matter from the additional course outline that was not already covered or not covered in enough depth.
 
 ---
 
@@ -36,9 +36,18 @@ This README is organized as a detailed numbered tutorial. Each module explains t
 24. [Module 19 - Continuous Integration](#24-module-19---continuous-integration)
 25. [Module 20 - Data-Driven Testing](#25-module-20---data-driven-testing)
 26. [Module 21 - Behavior-Driven Development](#26-module-21---behavior-driven-development)
-27. [Playwright Automation Top 20 Interview Questions and Answers](#27-playwright-automation-top-20-interview-questions-and-answers)
-28. [Best Practices and Troubleshooting](#28-best-practices-and-troubleshooting)
-29. [Author](#29-author)
+27. [Supplemental Module 22 - Playwright vs Cypress](#27-supplemental-module-22---playwright-vs-cypress)
+28. [Supplemental Module 23 - Development Environment, Test Application, and JavaScript TypeScript Fundamentals](#28-supplemental-module-23---development-environment-test-application-and-javascript-typescript-fundamentals)
+29. [Supplemental Module 24 - DOM Terminology and Advanced Locator Architecture](#29-supplemental-module-24---dom-terminology-and-advanced-locator-architecture)
+30. [Supplemental Module 25 - Advanced UI Widgets and Complex Interactions](#30-supplemental-module-25---advanced-ui-widgets-and-complex-interactions)
+31. [Supplemental Module 26 - Advanced Page Object Architecture](#31-supplemental-module-26---advanced-page-object-architecture)
+32. [Supplemental Module 27 - Advanced API State, Mocking, Authentication, and Cleanup](#32-supplemental-module-27---advanced-api-state-mocking-authentication-and-cleanup)
+33. [Supplemental Module 28 - Advanced Framework Configuration, Environment Variables, Retries, Tags, and Test Data](#33-supplemental-module-28---advanced-framework-configuration-environment-variables-retries-tags-and-test-data)
+34. [Supplemental Module 29 - Reporting, Screenshots, Videos, and Visual Testing](#34-supplemental-module-29---reporting-screenshots-videos-and-visual-testing)
+35. [Supplemental Module 30 - Docker, GitHub Actions, and Argos CI](#35-supplemental-module-30---docker-github-actions-and-argos-ci)
+36. [Playwright Automation Top 20 Interview Questions and Answers](#36-playwright-automation-top-20-interview-questions-and-answers)
+37. [Best Practices and Troubleshooting](#37-best-practices-and-troubleshooting)
+38. [Author](#38-author)
 
 ---
 
@@ -66,6 +75,7 @@ The repository is designed as a practical learning and portfolio project. It sho
 12. Improve runtime with optimization patterns.
 13. Run tests in GitHub Actions.
 14. Expand coverage using data-driven and BDD techniques.
+15. Add supplemental coverage for environment setup, JavaScript/TypeScript fundamentals, advanced widgets, framework architecture, reporting, Docker, and visual validation.
 
 ---
 
@@ -80,7 +90,9 @@ The repository is designed as a practical learning and portfolio project. It sho
 | Behave | BDD feature files and Given/When/Then step definitions |
 | GitHub API | Authenticated API automation practice |
 | GitHub Actions | Continuous integration execution |
-| HTML / Test Pages | Practice pages for UI automation examples |
+| JavaScript / TypeScript concepts | Supplemental understanding for Playwright users who read JS/TS examples or migrate frameworks |
+| Docker | Containerized test execution |
+| Visual comparison tools | Screenshot comparison and visual regression workflows |
 
 ---
 
@@ -135,8 +147,6 @@ behave
 
 **Subtopics covered:** Playwright installation, Playwright documentation, browser launch, clicking a link element, and script overview.
 
-**What to know:** A basic Playwright script starts the Playwright driver, launches a browser, creates a page, navigates to a URL, interacts with the page, and closes the browser. Playwright supports Chromium, Firefox, and WebKit.
-
 ```python
 from playwright.sync_api import sync_playwright
 
@@ -157,20 +167,11 @@ Fast and reliable end-to-end testing for modern web apps | Playwright Python
 https://playwright.dev/python/docs/intro
 ```
 
-**Necessary details:**
-
-- Use `headless=False` when learning or debugging.
-- Use `headless=True` or the default in CI.
-- Always close the browser when writing standalone scripts.
-- In Pytest, plugin fixtures often handle browser lifecycle automatically.
-
 ---
 
 ## 7. Module 2 - Locators
 
-**Subtopics covered:** Playwright Python REPL, locator role, input field locators, text locators, alt text, title, CSS selectors, CSS hierarchy, CSS pseudo-classes, XPath, XPath functions, and other locators.
-
-**What to know:** Locators are not just selectors; they are Playwright objects that auto-wait and re-query the DOM. Prefer user-facing locators before technical CSS/XPath selectors.
+**Subtopics covered:** Role locators, input locators, text locators, alt text, title, CSS selectors, hierarchy, pseudo-classes, XPath, XPath functions, and other locator strategies.
 
 ```python
 from playwright.sync_api import Page, expect
@@ -183,41 +184,19 @@ def test_locator_examples(page: Page):
 ```
 
 ```python
-def test_input_and_text_locators(page: Page):
-    page.goto("https://example.com/search")
-    page.get_by_placeholder("Search").fill("playwright")
-    page.get_by_text("Submit").click()
-```
-
-```python
 def test_css_and_xpath(page: Page):
     page.goto("https://example.com")
     page.locator("main nav a:first-child").click()
     page.locator("xpath=//button[contains(., 'Save')]").click()
 ```
 
-**Expected result:** Elements are found by accessibility role, placeholder, text, CSS hierarchy, pseudo-class, or XPath function and then interacted with.
-
-**Locator decision table:**
-
-| Locator Type | Use When |
-|---|---|
-| `get_by_role()` | Best for buttons, links, headings, checkboxes, dialogs, menus |
-| `get_by_label()` | Best for accessible forms |
-| `get_by_placeholder()` | Useful for inputs with placeholder text |
-| `get_by_text()` | Useful for visible text content |
-| `get_by_alt_text()` | Useful for images with alt text |
-| `get_by_title()` | Useful for title attributes |
-| CSS | Useful when semantic locators are unavailable |
-| XPath | Last resort for complex traversal |
+**Expected result:** Elements are found by accessibility role, text, CSS hierarchy, pseudo-class, or XPath function and then interacted with.
 
 ---
 
 ## 8. Module 3 - Actions
 
-**Subtopics covered:** Mouse actions, text input, radio buttons, checkboxes, switches, select option, dropdown menu, file upload, and keyboard shortcuts.
-
-**What to know:** Playwright actions auto-wait until elements are visible, enabled, stable, and ready for interaction. This makes tests more reliable than raw Selenium-style click timing.
+**Subtopics covered:** Mouse actions, text input, radio buttons, checkboxes, switches, select options, dropdown menus, file upload, and keyboard shortcuts.
 
 ```python
 from playwright.sync_api import Page, expect
@@ -227,33 +206,19 @@ def test_form_actions(page: Page):
     page.get_by_label("First Name").fill("Brian")
     page.get_by_label("Subscribe").check()
     page.get_by_label("Country").select_option("US")
+    page.locator("input[type='file']").set_input_files("tests/data/sample.txt")
+    page.keyboard.press("Control+S")
     page.get_by_role("button", name="Submit").click()
     expect(page.get_by_text("Form submitted")).to_be_visible()
 ```
 
-```python
-def test_keyboard_and_upload(page: Page):
-    page.goto("https://example.com/upload")
-    page.locator("input[type='file']").set_input_files("tests/data/sample.txt")
-    page.keyboard.press("Control+S")
-```
-
-**Expected result:** Text fields are filled, checkbox/radio style controls are selected, dropdowns are changed, a file is attached, and keyboard shortcuts are sent to the page.
-
-**Necessary details:**
-
-- Use `fill()` for replacing existing text.
-- Use `type()` when keystroke-by-keystroke behavior matters.
-- Use `select_option()` for native `<select>` elements.
-- Custom dropdowns usually require `click()` plus selecting a visible option.
+**Expected result:** Text fields are filled, checkbox-style controls are selected, dropdowns change, a file is attached, keyboard shortcuts are sent, and the form is submitted.
 
 ---
 
 ## 9. Module 4 - Events
 
-**Subtopics covered:** Playwright auto-waiting, auto-waiting navigation, custom waiting, event listeners, dialogs, downloads, sync vs. async, and asynchronous Playwright.
-
-**What to know:** Events are critical when actions trigger browser-level behavior such as downloads, dialogs, popups, network calls, or navigation. Playwright has context managers for many of these events.
+**Subtopics covered:** Auto-waiting, navigation waiting, custom waits, event listeners, dialogs, downloads, sync vs. async Playwright.
 
 ```python
 from playwright.sync_api import Page, expect
@@ -270,33 +235,16 @@ def test_download(page: Page):
     page.goto("https://example.com/downloads")
     with page.expect_download() as download_info:
         page.get_by_text("Download report").click()
-    download = download_info.value
-    download.save_as("downloaded-report.pdf")
+    download_info.value.save_as("downloaded-report.pdf")
 ```
 
-```python
-import asyncio
-from playwright.async_api import async_playwright
-
-async def main():
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        page = await browser.new_page()
-        await page.goto("https://example.com")
-        await browser.close()
-
-asyncio.run(main())
-```
-
-**Expected result:** Dialogs are handled, downloads are captured, and async code performs the same browser workflow using `await`.
+**Expected result:** Dialogs are handled and downloads are captured safely using Playwright event APIs.
 
 ---
 
 ## 10. Module 5 - Authentication
 
-**Subtopics covered:** Google sign-in concepts, saving authentication state, reusing auth state, and login issues.
-
-**What to know:** Authentication should be handled carefully. Avoid logging in through the UI in every test when possible. Save storage state after a successful login and reuse it.
+**Subtopics covered:** Sign-in concepts, saving authentication state, reusing authentication state, and login problems.
 
 ```python
 from playwright.sync_api import sync_playwright
@@ -321,21 +269,13 @@ def test_reuse_auth_state(browser):
     assert "account" in page.url
 ```
 
-**Expected result:** The first script creates `auth_state.json`; the test reuses it and skips login.
-
-**Security notes:**
-
-- Do not commit real credentials or real auth state to public repositories.
-- Use environment variables for usernames, passwords, and tokens.
-- Some providers block automation or require MFA; use test accounts and test environments.
+**Expected result:** The first script creates `auth_state.json`; the test reuses it and skips repetitive login steps.
 
 ---
 
 ## 11. Module 6 - Automated Mail Checker
 
-**Subtopics covered:** Automated mail checker overview, project setup, locating new emails, locating email data, combining locators, and checking email from the terminal.
-
-**What to know:** Email automation requires stable mailbox locators and clear filtering. Tests should search by sender, subject, timestamp, body text, or unique test identifiers rather than relying only on the first row.
+**Subtopics covered:** Project setup, locating new emails, locating email data, combining locators, and checking email data from terminal execution.
 
 ```python
 from playwright.sync_api import Page, expect
@@ -347,33 +287,13 @@ def test_locate_email(page: Page):
     expect(email.locator(".subject")).to_contain_text("Password reset")
 ```
 
-```python
-def get_email_data(page: Page, subject: str) -> dict:
-    page.goto("https://example-mail-app.test/inbox")
-    row = page.locator(".email-row").filter(has_text=subject).first
-    return {
-        "sender": row.locator(".sender").inner_text(),
-        "subject": row.locator(".subject").inner_text(),
-        "preview": row.locator(".preview").inner_text(),
-    }
-```
-
-**Expected result:** The test locates the target email, confirms it is visible, and extracts sender/subject/preview data.
-
-**Terminal usage pattern:**
-
-```python
-if __name__ == "__main__":
-    print("Checking latest email from terminal...")
-```
+**Expected result:** The test finds the target email row and verifies the subject.
 
 ---
 
 ## 12. Module 7 - Pytest
 
-**Subtopics covered:** Testing Pytest, writing tests, running tests, type hinting, test state, Pytest fixtures, using fixtures, and fixture scope.
-
-**What to know:** Pytest discovers files and functions by naming convention. Fixtures inject reusable dependencies. Scope controls how often setup runs.
+**Subtopics covered:** Writing tests, running tests, type hints, test state, fixtures, fixture usage, and fixture scope.
 
 ```python
 import pytest
@@ -386,32 +306,17 @@ def test_user_role(user_data: dict):
     assert user_data["role"] == "qa"
 ```
 
-```python
-@pytest.fixture(scope="session")
-def config():
-    return {"base_url": "https://example.com"}
+**Expected result:** Pytest injects the fixture and reports the test as passed.
 
-@pytest.fixture(scope="function")
-def empty_cart():
-    return []
+```text
+1 passed
 ```
-
-**Expected result:** Pytest injects fixture return values into tests. The first test passes and prints a result such as `1 passed`.
-
-**Necessary details:**
-
-- Function scope runs once per test.
-- Class scope runs once per test class.
-- Module scope runs once per module.
-- Session scope runs once per test run.
 
 ---
 
 ## 13. Module 8 - pytest-playwright Plugin
 
-**Subtopics covered:** Installing the plugin, Playwright test, running test, Pytest config, and test hooks.
-
-**What to know:** `pytest-playwright` supplies the `page`, `context`, `browser`, and `browser_name` fixtures. It also enables CLI browser selection.
+**Subtopics covered:** Installing the plugin, writing Playwright tests with plugin fixtures, Pytest config, running tests, and hooks.
 
 ```python
 from playwright.sync_api import Page, expect
@@ -422,26 +327,17 @@ def test_homepage(page: Page):
 ```
 
 ```ini
-# pytest.ini
 [pytest]
 addopts = --browser chromium
 ```
 
-```python
-# conftest.py
-def pytest_runtest_setup(item):
-    print(f"Running test: {item.name}")
-```
-
-**Expected result:** The plugin creates the browser page automatically, the test opens the page, and the title assertion passes.
+**Expected result:** The plugin creates the `page` fixture automatically and runs the browser test.
 
 ---
 
 ## 14. Module 9 - Playwright Tools
 
-**Subtopics covered:** Playwright debugging tools, code generation, screenshots, trace viewer, headed mode, slow motion, videos, and reports.
-
-**What to know:** Playwright tools improve productivity by showing what the browser did and why a test failed. Trace viewer is one of the most useful tools for diagnosing flaky UI tests.
+**Subtopics covered:** Codegen, inspector, headed mode, slow motion, screenshots, tracing, trace viewer, videos, and reports.
 
 ```python
 def test_screenshot(page):
@@ -456,15 +352,13 @@ pytest --tracing on
 playwright show-trace trace.zip
 ```
 
-**Expected result:** Screenshots, traces, and codegen output help inspect browser behavior and generate starter locator code.
+**Expected result:** Screenshots, trace files, and generated locator code help debug and author tests.
 
 ---
 
 ## 15. Module 10 - Web-First Assertions
 
-**Subtopics covered:** Assertions page, element state, element text, attribute, input field, checkbox, and option menu.
-
-**What to know:** Playwright assertions wait automatically. This reduces flaky tests caused by timing delays.
+**Subtopics covered:** Page assertions, element state, text, attributes, input fields, checkboxes, option menu assertions, generic assertions, locator assertions, and soft assertions.
 
 ```python
 from playwright.sync_api import expect
@@ -474,33 +368,27 @@ def test_assertions(page):
     expect(page).to_have_url(lambda url: "settings" in url)
     expect(page.get_by_role("heading", name="Settings")).to_be_visible()
     expect(page.get_by_label("Email")).to_have_value("user@example.com")
-    expect(page.get_by_label("Subscribe")).to_be_checked()
 ```
 
 ```python
-expect(page.locator("#save")).to_have_attribute("type", "submit")
-expect(page.locator("select#country")).to_have_value("US")
+import pytest
+
+def test_soft_assertion_style():
+    pytest.assume(1 == 1)
+    pytest.assume("qa" in "automation qa")
 ```
 
-**Expected result:** Each assertion waits for the expected condition and passes when the UI state is correct.
+**Expected result:** Playwright waits for UI states automatically; soft assertion plugins can collect multiple assertion failures before ending a test.
 
 ---
 
 ## 16. Module 11 - UI Testing Playground
 
-**Subtopics covered:** Dynamic ID, class attribute, hidden layer, load delay, Ajax request, click action, input field, scrollbars, dynamic table, verify text, progress bar, visibility, app login, mouse hover, NBSP character, and overlapped elements.
-
-**What to know:** UI Testing Playground examples represent real automation problems: unstable IDs, overlays, delays, hidden content, dynamic data, scroll behavior, and text formatting issues.
+**Subtopics covered:** Dynamic IDs, class attributes, hidden layers, load delay, Ajax request, click actions, input fields, scrollbars, dynamic tables, text verification, progress bars, visibility, app login, mouse hover, NBSP, and overlapped elements.
 
 ```python
 from playwright.sync_api import expect
 
-def test_dynamic_id(page):
-    page.goto("http://uitestingplayground.com/dynamicid")
-    page.get_by_role("button", name="Button with Dynamic ID").click()
-```
-
-```python
 def test_ajax_request(page):
     page.goto("http://uitestingplayground.com/ajax")
     page.get_by_role("button", name="Button Triggering AJAX Request").click()
@@ -514,21 +402,13 @@ def test_dynamic_table(page):
     expect(chrome_row).to_contain_text("Chrome")
 ```
 
-```python
-def test_nbsp(page):
-    page.goto("http://uitestingplayground.com/nbsp")
-    expect(page.get_by_text("My Button", exact=True)).to_be_visible()
-```
-
-**Expected result:** Tests avoid brittle IDs and use meaningful locator strategies for dynamic and difficult UI cases.
+**Expected result:** Tests handle dynamic UI behavior without brittle sleeps or unstable IDs.
 
 ---
 
 ## 17. Module 12 - Playwright Fixtures
 
-**Subtopics covered:** Function scope fixtures, session scope fixtures, browser selection, browser launch arguments, and context arguments.
-
-**What to know:** Fixtures centralize setup, reduce duplicate code, and make tests easier to maintain.
+**Subtopics covered:** Function scope fixtures, session scope fixtures, browser selection, launch arguments, and context arguments.
 
 ```python
 import pytest
@@ -546,21 +426,13 @@ def test_dashboard(logged_in_page):
     assert "dashboard" in logged_in_page.url
 ```
 
-```python
-@pytest.fixture(scope="session")
-def browser_context_args(browser_context_args):
-    return {**browser_context_args, "viewport": {"width": 1440, "height": 900}}
-```
-
-**Expected result:** Tests receive preconfigured pages or contexts without repeating setup logic.
+**Expected result:** Tests receive preconfigured pages without repeating setup logic.
 
 ---
 
 ## 18. Module 13 - Page Object Model
 
-**Subtopics covered:** What POM is, POM implementation, POM usage, Playwright homepage POM, and POM usage in tests.
-
-**What to know:** POM hides selectors and UI actions behind page classes. Tests become clearer and less brittle.
+**Subtopics covered:** POM concept, implementation, usage, Playwright homepage POM, and POM tests.
 
 ```python
 from playwright.sync_api import Page, expect
@@ -579,40 +451,15 @@ class LoginPage:
         self.email.fill(email)
         self.password.fill(password)
         self.submit.click()
-
-class DashboardPage:
-    def __init__(self, page: Page):
-        self.page = page
-        self.heading = page.get_by_role("heading", name="Dashboard")
-
-    def should_be_open(self):
-        expect(self.heading).to_be_visible()
 ```
 
-```python
-def test_login(page: Page):
-    login = LoginPage(page)
-    dashboard = DashboardPage(page)
-    login.open()
-    login.login("user@example.com", "password")
-    dashboard.should_be_open()
-```
-
-**Expected result:** The test reads like a user workflow, while locator details stay inside page classes.
+**Expected result:** Tests call meaningful methods instead of repeating locator code.
 
 ---
 
 ## 19. Module 14 - Network Events
 
-**Subtopics covered:** Network events, handle requests, and modify response.
-
-**What to know:** Network handling lets tests observe, block, mock, or modify browser traffic.
-
-```python
-def test_request_logging(page):
-    page.on("request", lambda request: print(request.method, request.url))
-    page.goto("https://example.com")
-```
+**Subtopics covered:** Network events, request inspection, request handling, and response modification.
 
 ```python
 def test_mock_user_api(page):
@@ -624,21 +471,13 @@ def test_mock_user_api(page):
     page.goto("https://example.com/profile")
 ```
 
-```python
-def test_block_images(page):
-    page.route("**/*", lambda route: route.abort() if route.request.resource_type == "image" else route.continue_())
-    page.goto("https://example.com")
-```
-
-**Expected result:** Requests are logged, selected API calls are mocked, and image requests are blocked when desired.
+**Expected result:** The browser receives mocked API data instead of the real backend response.
 
 ---
 
 ## 20. Module 15 - API Testing
 
-**Subtopics covered:** Making an API call, API request context, API query string, CRUD operations, and mock API.
-
-**What to know:** Playwright can test APIs directly through `APIRequestContext`. API tests are faster than UI tests and help verify backend behavior.
+**Subtopics covered:** API calls, request context, query string, CRUD operations, and mock API.
 
 ```python
 from playwright.sync_api import Playwright
@@ -651,36 +490,13 @@ def test_get_post(playwright: Playwright):
     api.dispose()
 ```
 
-```python
-def test_query_string(playwright: Playwright):
-    api = playwright.request.new_context(base_url="https://jsonplaceholder.typicode.com")
-    response = api.get("/comments", params={"postId": 1})
-    assert response.ok
-    assert len(response.json()) > 0
-    api.dispose()
-```
-
-```python
-def test_create_update_delete(playwright: Playwright):
-    api = playwright.request.new_context(base_url="https://jsonplaceholder.typicode.com")
-    created = api.post("/posts", data={"title": "test", "body": "data", "userId": 1})
-    assert created.status in [200, 201]
-    updated = api.put("/posts/1", data={"title": "updated", "body": "data", "userId": 1})
-    assert updated.ok
-    deleted = api.delete("/posts/1")
-    assert deleted.ok
-    api.dispose()
-```
-
-**Expected result:** GET, query string, POST, PUT, and DELETE requests return successful responses and expected JSON data.
+**Expected result:** The API returns post `1`, the response is OK, and the JSON body contains `id == 1`.
 
 ---
 
 ## 21. Module 16 - Optimization
 
-**Subtopics covered:** Intercept requests, disabling JavaScript, and running tests in parallel.
-
-**What to know:** Optimization reduces test runtime and isolates behavior. Blocking unnecessary resources and running tests in parallel are common strategies.
+**Subtopics covered:** Intercept requests, disabling JavaScript, and parallel execution.
 
 ```python
 def test_block_fonts_and_images(page):
@@ -695,28 +511,17 @@ def test_block_fonts_and_images(page):
     assert "playwright" in page.url
 ```
 
-```python
-def test_without_javascript(browser):
-    context = browser.new_context(java_script_enabled=False)
-    page = context.new_page()
-    page.goto("https://example.com")
-    assert page.locator("body").is_visible()
-    context.close()
-```
-
 ```bash
 pytest -n auto
 ```
 
-**Expected result:** Nonessential requests are blocked, no-JavaScript behavior can be validated, and tests run in parallel when `pytest-xdist` is installed.
+**Expected result:** Nonessential resources are blocked and tests can run in parallel when `pytest-xdist` is installed.
 
 ---
 
 ## 22. Module 17 - Tips and Tricks
 
-**Subtopics covered:** Pytest CLI arguments, Python debugger, device emulation, evaluate JavaScript, and generate reports.
-
-**What to know:** Productivity tools make it easier to debug, inspect, emulate, and report test behavior.
+**Subtopics covered:** CLI arguments, debugger, device emulation, JavaScript evaluation, and reports.
 
 ```python
 def test_evaluate_javascript(page):
@@ -735,22 +540,13 @@ def test_device_emulation(playwright):
     browser.close()
 ```
 
-```bash
-pytest -k login
-pytest -x
-pytest --maxfail=1
-pytest --html=report.html
-```
-
-**Expected result:** JavaScript executes in the browser, device settings emulate mobile, and CLI options control test selection and reporting.
+**Expected result:** JavaScript executes in the browser page and mobile emulation opens the page with a mobile viewport/user-agent profile.
 
 ---
 
 ## 23. Module 18 - GitHub API
 
-**Subtopics covered:** GitHub API introduction, project setup, GitHub token, authorized API context, writing tests, and running tests.
-
-**What to know:** Authenticated API tests should use environment variables for tokens. Never hard-code secrets.
+**Subtopics covered:** GitHub API introduction, project setup, token usage, authorized context, writing tests, and running tests.
 
 ```python
 import os
@@ -767,24 +563,13 @@ def test_github_authenticated_user(playwright: Playwright):
     api.dispose()
 ```
 
-```python
-def test_github_repo_metadata(playwright: Playwright):
-    api = playwright.request.new_context(base_url="https://api.github.com")
-    response = api.get("/repos/microsoft/playwright")
-    assert response.ok
-    assert response.json()["name"] == "playwright"
-    api.dispose()
-```
-
-**Expected result:** Public GitHub API calls return repository metadata. Authenticated calls return user data when the token is valid.
+**Expected result:** A valid token returns the authenticated GitHub user; a missing or invalid token returns unauthorized.
 
 ---
 
 ## 24. Module 19 - Continuous Integration
 
-**Subtopics covered:** GitHub CI introduction, setup repository, writing tests, GitHub Action, and running automated tests.
-
-**What to know:** CI automation should install dependencies, install Playwright browsers, run tests in headless mode, and upload reports or traces when useful.
+**Subtopics covered:** GitHub CI introduction, repository setup, writing tests, GitHub Actions, and running automated tests.
 
 ```yaml
 name: Playwright Python Tests
@@ -806,15 +591,13 @@ jobs:
       - run: pytest --tracing on
 ```
 
-**Expected result:** GitHub Actions checks out the repo, installs Python dependencies, installs browser dependencies, runs tests, and marks the workflow pass/fail.
+**Expected result:** GitHub Actions installs dependencies, installs Playwright browsers, runs tests, and marks the workflow pass/fail.
 
 ---
 
 ## 25. Module 20 - Data-Driven Testing
 
-**Subtopics covered:** What data-driven testing is, Pytest parametrization, and running parametrized tests.
-
-**What to know:** Data-driven tests run the same logic with multiple data rows. This avoids copy/paste test duplication.
+**Subtopics covered:** Data-driven testing, Pytest parametrization, and running the same test with multiple data rows.
 
 ```python
 import pytest
@@ -829,28 +612,17 @@ def test_login_data(username, password, expected):
     assert result == expected
 ```
 
-**Expected result:** Pytest executes the same test three times.
+**Expected result:** Pytest executes the test three times.
 
 ```text
 3 passed
 ```
 
-```python
-@pytest.mark.parametrize("search_term", ["playwright", "pytest", "automation"])
-def test_search_terms(page, search_term):
-    page.goto("https://example.com/search")
-    page.get_by_placeholder("Search").fill(search_term)
-```
-
-**Expected result:** The browser test runs once per search term.
-
 ---
 
 ## 26. Module 21 - Behavior-Driven Development
 
-**Subtopics covered:** What BDD is, project setup, defining a feature, implementing steps, running tests, practice assessment patterns, and full course assessment patterns.
-
-**What to know:** BDD expresses expected behavior in Given/When/Then language. Feature files are readable by non-developers, while step definitions contain Python automation code.
+**Subtopics covered:** BDD concepts, project setup, feature files, step definitions, hooks, and Behave execution.
 
 ```gherkin
 Feature: Login
@@ -880,30 +652,528 @@ def verify_dashboard(context):
     expect(context.page).to_have_url(lambda url: "dashboard" in url)
 ```
 
-```python
-# environment.py
-from playwright.sync_api import sync_playwright
-
-def before_scenario(context, scenario):
-    context.playwright = sync_playwright().start()
-    context.browser = context.playwright.chromium.launch()
-    context.page = context.browser.new_page()
-
-def after_scenario(context, scenario):
-    context.browser.close()
-    context.playwright.stop()
-```
-
-**Expected result:** Behave maps feature steps to Python functions, opens the browser before each scenario, closes it afterward, and reports scenario results.
-
-```text
-1 scenario passed
-3 steps passed
-```
+**Expected result:** Behave maps feature steps to Python functions and reports the scenario as passed.
 
 ---
 
-## 27. Playwright Automation Top 20 Interview Questions and Answers
+## 27. Supplemental Module 22 - Playwright vs Cypress
+
+**Why this was added:** The additional table of contents includes Playwright vs Cypress comparison material that was not previously covered.
+
+**What to know:** Playwright and Cypress both automate browsers, but their architecture and strengths differ.
+
+| Topic | Playwright | Cypress |
+|---|---|---|
+| Browser support | Chromium, Firefox, WebKit | Primarily Chromium-family and Firefox support depending on version/config |
+| Multi-tab/multi-context | Strong browser context support | More constrained by Cypress architecture |
+| API testing | Built-in request context | Available through Cypress request commands |
+| Auto-waiting | Built into actions and assertions | Built into Cypress command chain |
+| Language style | Python, TypeScript, JavaScript, Java, .NET | JavaScript / TypeScript |
+| Best fit | Cross-browser E2E, API + UI, complex browser flows | Front-end developer workflow, fast component/E2E workflows |
+
+```python
+# Playwright-style Python test
+from playwright.sync_api import expect
+
+def test_playwright_style(page):
+    page.goto("https://example.com")
+    expect(page.locator("h1")).to_be_visible()
+```
+
+```javascript
+// Cypress-style JavaScript comparison
+it('checks heading', () => {
+  cy.visit('https://example.com')
+  cy.get('h1').should('be.visible')
+})
+```
+
+**Expected result:** Both tests open a page and validate a heading, but the syntax and runtime model differ.
+
+---
+
+## 28. Supplemental Module 23 - Development Environment, Test Application, and JavaScript TypeScript Fundamentals
+
+**Why this was added:** The additional outline includes VS Code, Git, Node.js, cloning a test app, JavaScript fundamentals, and TypeScript vs JavaScript material.
+
+**What to know:** This Python repository does not require JavaScript to write tests, but many Playwright examples online use JavaScript or TypeScript. Understanding basic JS/TS helps users read broader Playwright documentation and compare implementations.
+
+```bash
+# Environment checks
+python --version
+git --version
+node --version
+code --version
+
+# Clone a test app or automation repo
+git clone https://github.com/example/pw-test-app.git
+cd pw-test-app
+```
+
+```javascript
+// JavaScript variables, constants, arrays, objects, and functions
+const user = { name: 'Brian', role: 'QA' }
+const skills = ['Playwright', 'Pytest', 'API Testing']
+
+function formatUser(profile) {
+  return `${profile.name} works in ${profile.role}`
+}
+
+console.log(formatUser(user))
+console.log(skills.join(', '))
+```
+
+```typescript
+// TypeScript adds static typing
+interface UserProfile {
+  name: string
+  role: string
+}
+
+const user: UserProfile = { name: 'Brian', role: 'QA' }
+console.log(user.name)
+```
+
+**Expected result:** The environment commands confirm installed tools. JavaScript and TypeScript examples show how variables, arrays, objects, functions, imports/exports, classes, and types relate to Playwright examples written in JS/TS.
+
+---
+
+## 29. Supplemental Module 24 - DOM Terminology and Advanced Locator Architecture
+
+**Why this was added:** The uploaded outline includes DOM terminology, parent/child locators, filters, extracting values, timeouts, and soft assertions as specific topics.
+
+**What to know:** The DOM is the browser's structured representation of HTML. Elements have tags, attributes, IDs, classes, text, parent/child relationships, and sometimes hidden or dynamic state.
+
+```html
+<section id="profile" class="card">
+  <h2>Profile</h2>
+  <button data-testid="save-profile">Save</button>
+</section>
+```
+
+```python
+from playwright.sync_api import expect
+
+def test_dom_and_advanced_locators(page):
+    page.set_content('''
+      <section id="profile" class="card">
+        <h2>Profile</h2>
+        <button data-testid="save-profile">Save</button>
+      </section>
+    ''')
+
+    card = page.locator("section.card").filter(has_text="Profile")
+    button = card.get_by_test_id("save-profile")
+    expect(button).to_have_text("Save")
+```
+
+```python
+def test_extract_values(page):
+    page.set_content('<input id="email" value="user@example.com"><p class="status">Ready</p>')
+    email_value = page.locator("#email").input_value()
+    status_text = page.locator(".status").inner_text()
+    assert email_value == "user@example.com"
+    assert status_text == "Ready"
+```
+
+```python
+def test_timeout_configuration(page):
+    page.set_default_timeout(5000)
+    page.set_default_navigation_timeout(10000)
+    page.goto("https://example.com")
+```
+
+**Expected result:** Tests select elements by DOM structure, parent/child relationships, filtered text, test IDs, extracted values, and explicit timeout settings.
+
+---
+
+## 30. Supplemental Module 25 - Advanced UI Widgets and Complex Interactions
+
+**Why this was added:** The additional outline includes tooltips, web tables, date pickers, sliders, drag-and-drop, iframes, and overlapped elements.
+
+### Tooltip Example
+
+```python
+from playwright.sync_api import expect
+
+def test_tooltip(page):
+    page.goto("https://example.com/tooltips")
+    page.get_by_role("button", name="Help").hover()
+    expect(page.get_by_role("tooltip")).to_contain_text("Helpful information")
+```
+
+**Expected result:** Hovering displays the tooltip and the assertion validates the tooltip text.
+
+### Web Table Example
+
+```python
+def test_table_row_by_column(page):
+    page.goto("https://example.com/users")
+    row = page.get_by_role("row").filter(has_text="brian@example.com")
+    expect(row).to_contain_text("Active")
+    row.get_by_role("button", name="Edit").click()
+```
+
+**Expected result:** The test finds the correct table row by known column text and interacts with a button inside that row.
+
+### Date Picker Example
+
+```python
+from datetime import date, timedelta
+
+def test_date_picker(page):
+    future_date = date.today() + timedelta(days=7)
+    page.goto("https://example.com/date-picker")
+    page.get_by_label("Date").click()
+    page.get_by_text(str(future_date.day), exact=True).click()
+    expect(page.get_by_label("Date")).not_to_have_value("")
+```
+
+**Expected result:** The test selects a future day and confirms the input has a selected value.
+
+### Slider Example
+
+```python
+def test_slider(page):
+    page.goto("https://example.com/slider")
+    slider = page.locator("input[type='range']")
+    slider.evaluate("element => element.value = 75")
+    slider.dispatch_event("input")
+    assert slider.input_value() == "75"
+```
+
+**Expected result:** JavaScript evaluation changes the slider value and dispatches the input event.
+
+### iFrame and Drag-and-Drop Example
+
+```python
+def test_iframe_drag_drop(page):
+    page.goto("https://example.com/iframe-dragdrop")
+    frame = page.frame_locator("iframe[name='demo-frame']")
+    source = frame.locator("#source")
+    target = frame.locator("#target")
+    source.drag_to(target)
+```
+
+**Expected result:** Playwright switches into the iframe with `frame_locator()` and performs drag-and-drop inside the frame.
+
+---
+
+## 31. Supplemental Module 26 - Advanced Page Object Architecture
+
+**Why this was added:** The additional outline includes page object manager, helper base class, private helper methods, parametrized methods, and final framework architecture.
+
+**What to know:** Basic POM centralizes one page. Advanced POM architecture adds shared helpers and a page manager that initializes all page objects in one place.
+
+```python
+from playwright.sync_api import Page, expect
+
+class BasePage:
+    def __init__(self, page: Page):
+        self.page = page
+
+    def open(self, path: str):
+        self.page.goto(f"https://example.com{path}")
+
+    def expect_heading(self, name: str):
+        expect(self.page.get_by_role("heading", name=name)).to_be_visible()
+
+class NavigationPage(BasePage):
+    def open_menu_item(self, menu: str, item: str):
+        menu_button = self.page.get_by_role("button", name=menu)
+        if menu_button.get_attribute("aria-expanded") != "true":
+            menu_button.click()
+        self.page.get_by_role("link", name=item).click()
+
+class DatePickerPage(BasePage):
+    def select_day(self, day: int):
+        self.page.get_by_text(str(day), exact=True).click()
+
+class PageManager:
+    def __init__(self, page: Page):
+        self.navigation = NavigationPage(page)
+        self.date_picker = DatePickerPage(page)
+```
+
+```python
+def test_page_manager(page):
+    app = PageManager(page)
+    app.navigation.open("/")
+    app.navigation.open_menu_item("Forms", "Date Picker")
+    app.date_picker.select_day(15)
+```
+
+**Expected result:** Tests use high-level objects instead of directly managing every page class or locator.
+
+---
+
+## 32. Supplemental Module 27 - Advanced API State, Mocking, Authentication, and Cleanup
+
+**Why this was added:** The outline includes API mock, response modification, API preconditions, API authentication, sharing auth state, and cleanup using intercepted browser responses.
+
+### API Authentication Precondition
+
+```python
+import json
+from playwright.sync_api import Playwright
+
+def create_auth_state_with_api(playwright: Playwright):
+    api = playwright.request.new_context(base_url="https://example.com")
+    token_response = api.post("/api/login", data={"email": "user@example.com", "password": "password"})
+    token = token_response.json()["token"]
+
+    with open("auth_token.json", "w") as file:
+        json.dump({"token": token}, file)
+
+    api.dispose()
+```
+
+**Expected result:** The API login returns a token and stores it in a JSON file that later tests can use.
+
+### Create Precondition with API, Validate with UI
+
+```python
+def test_create_article_api_then_delete_ui(playwright, page):
+    api = playwright.request.new_context(base_url="https://example.com/api")
+    created = api.post("/articles", data={"title": "Playwright API Setup"})
+    article_id = created.json()["id"]
+
+    page.goto(f"https://example.com/articles/{article_id}")
+    page.get_by_role("button", name="Delete").click()
+
+    api.dispose()
+```
+
+**Expected result:** Test data is created quickly through the API and then exercised through the UI.
+
+### Intercept Browser Response and Clean Up with API
+
+```python
+def test_ui_create_then_api_cleanup(page, playwright):
+    with page.expect_response("**/api/articles") as response_info:
+        page.goto("https://example.com/articles/new")
+        page.get_by_label("Title").fill("Temporary Article")
+        page.get_by_role("button", name="Save").click()
+
+    article_id = response_info.value.json()["id"]
+    api = playwright.request.new_context(base_url="https://example.com/api")
+    api.delete(f"/articles/{article_id}")
+    api.dispose()
+```
+
+**Expected result:** The UI creates data, the test captures the created ID from the browser API response, and the API deletes the data during cleanup.
+
+---
+
+## 33. Supplemental Module 28 - Advanced Framework Configuration, Environment Variables, Retries, Tags, and Test Data
+
+**Why this was added:** The outline includes custom scripts, Faker data generation, retries, parallelism, environment variables, configuration files, custom fixtures, project setup/teardown, global setup/teardown, and tags.
+
+### Environment Variables with `.env`
+
+```python
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+BASE_URL = os.getenv("BASE_URL", "https://example.com")
+TEST_USER = os.getenv("TEST_USER")
+```
+
+**Expected result:** Values can be configured without hard-coding secrets or URLs.
+
+### Faker Test Data
+
+```python
+from faker import Faker
+
+fake = Faker()
+
+def test_generated_user_data():
+    email = fake.email()
+    username = fake.user_name()
+    assert "@" in email
+    assert len(username) > 0
+```
+
+**Expected result:** Each run can create unique data and reduce collisions in test environments.
+
+### Retries and Tags in Pytest
+
+```ini
+# pytest.ini
+[pytest]
+markers =
+    smoke: critical smoke tests
+    regression: broader regression tests
+addopts = --maxfail=1
+```
+
+```python
+import pytest
+
+@pytest.mark.smoke
+def test_smoke_login():
+    assert True
+```
+
+```bash
+pytest -m smoke
+pytest --reruns 2
+pytest -n 2
+```
+
+**Expected result:** Tests can be filtered by marker, retried when configured with retry plugins, and distributed across workers when `pytest-xdist` is installed.
+
+### Global Setup/Teardown Style Fixture
+
+```python
+import pytest
+
+@pytest.fixture(scope="session", autouse=True)
+def global_test_setup():
+    print("Starting automation suite")
+    yield
+    print("Ending automation suite")
+```
+
+**Expected result:** Setup runs before the test session and teardown runs after all tests finish.
+
+---
+
+## 34. Supplemental Module 29 - Reporting, Screenshots, Videos, and Visual Testing
+
+**Why this was added:** The outline includes screenshots, videos, reporting, built-in visual testing, component visual checks, accuracy adjustment, snapshot updates, and third-party reports.
+
+### Screenshot and Buffer Example
+
+```python
+def test_page_and_element_screenshot(page):
+    page.goto("https://example.com")
+    page.screenshot(path="artifacts/page.png", full_page=True)
+    logo = page.locator("img").first
+    image_bytes = logo.screenshot()
+    assert len(image_bytes) > 0
+```
+
+**Expected result:** A full-page screenshot is saved, and an element screenshot is stored in memory as bytes.
+
+### Video Recording Context
+
+```python
+def test_video_recording(browser):
+    context = browser.new_context(record_video_dir="videos/", record_video_size={"width": 1280, "height": 720})
+    page = context.new_page()
+    page.goto("https://example.com")
+    context.close()
+```
+
+**Expected result:** Playwright records a video for the browser context and saves it after context close.
+
+### Visual Snapshot Testing
+
+```python
+from playwright.sync_api import expect
+
+def test_visual_snapshot(page):
+    page.goto("https://example.com")
+    expect(page).to_have_screenshot("home-page.png", max_diff_pixel_ratio=0.01)
+```
+
+```bash
+pytest --update-snapshots
+```
+
+**Expected result:** Playwright compares the current screenshot to the baseline image. The update command refreshes baseline snapshots when UI changes are intentional.
+
+### Reporting Commands
+
+```bash
+pytest --junitxml=reports/junit.xml
+pytest --html=reports/report.html
+allure generate allure-results -o allure-report --clean
+```
+
+**Expected result:** Test results are exported for CI dashboards, HTML reports, or Allure reporting.
+
+---
+
+## 35. Supplemental Module 30 - Docker, GitHub Actions, and Argos CI
+
+**Why this was added:** The outline includes running Playwright in Docker, Dockerfile, docker-compose, saving reports from a container, GitHub Actions for pull requests, and Argos CI visual validation.
+
+### Dockerfile Example
+
+```dockerfile
+FROM mcr.microsoft.com/playwright/python:v1.45.0-jammy
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD ["pytest", "--junitxml=reports/junit.xml"]
+```
+
+**Expected result:** The container has browser dependencies and runs the Pytest suite inside a consistent environment.
+
+### docker-compose Example
+
+```yaml
+services:
+  tests:
+    build: .
+    volumes:
+      - ./reports:/app/reports
+    environment:
+      - BASE_URL=https://example.com
+```
+
+```bash
+docker compose up --build
+```
+
+**Expected result:** Tests run in the container and reports are saved back to the host `reports` folder.
+
+### GitHub Actions with Visual Report Upload
+
+```yaml
+name: Playwright Tests
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - run: playwright install --with-deps
+      - run: pytest --junitxml=reports/junit.xml
+      - uses: actions/upload-artifact@v4
+        with:
+          name: playwright-reports
+          path: reports/
+```
+
+**Expected result:** Every push or pull request runs the tests and stores report artifacts.
+
+### Argos CI Concept
+
+```bash
+# Conceptual example for visual validation workflow
+npx argos upload screenshots
+```
+
+**Expected result:** Screenshots are uploaded to a visual review service for baseline comparison and pull-request validation.
+
+---
+
+## 36. Playwright Automation Top 20 Interview Questions and Answers
 
 ### 1. What is Playwright?
 
@@ -915,12 +1185,7 @@ Playwright has built-in auto-waiting, modern locator strategies, browser context
 
 ### 3. What is a browser context?
 
-A browser context is an isolated browser session. Each context has its own cookies, local storage, session storage, permissions, and viewport. It is useful for running independent tests without sharing state.
-
-```python
-context = browser.new_context()
-page = context.new_page()
-```
+A browser context is an isolated browser session. Each context has its own cookies, local storage, session storage, permissions, and viewport.
 
 ### 4. What is the difference between `browser`, `context`, and `page`?
 
@@ -928,122 +1193,71 @@ page = context.new_page()
 
 ### 5. What are Playwright locators?
 
-Locators are objects used to find and interact with elements. They auto-wait and re-query the DOM, making them more reliable than one-time element handles.
-
-```python
-page.get_by_role("button", name="Submit").click()
-```
+Locators are Playwright objects used to find and interact with elements. They auto-wait and re-query the DOM.
 
 ### 6. Which locator strategy is preferred?
 
-Prefer user-facing and accessibility-based locators: `get_by_role`, `get_by_label`, `get_by_text`, and `get_by_placeholder`. Use CSS or XPath only when semantic locators are not practical.
+Prefer user-facing and accessibility-based locators such as `get_by_role`, `get_by_label`, `get_by_text`, and `get_by_placeholder`.
 
 ### 7. What is auto-waiting?
 
-Auto-waiting means Playwright waits for elements to be actionable before performing actions. For example, Playwright waits until an element is visible, stable, enabled, and able to receive events before clicking.
+Auto-waiting means Playwright waits for elements to be actionable before performing actions.
 
 ### 8. What are web-first assertions?
 
-Web-first assertions are Playwright assertions that automatically wait until a condition is satisfied or a timeout occurs.
-
-```python
-expect(page.get_by_text("Saved")).to_be_visible()
-```
+Web-first assertions automatically wait until an expected condition is met or a timeout occurs.
 
 ### 9. How do you handle alerts or dialogs?
 
-Use the `dialog` event.
-
-```python
-page.on("dialog", lambda dialog: dialog.accept())
-page.get_by_text("Show Alert").click()
-```
+Use the `dialog` event with `page.on("dialog", handler)`.
 
 ### 10. How do you handle downloads?
 
-Use `page.expect_download()` around the action that triggers the download.
-
-```python
-with page.expect_download() as download_info:
-    page.get_by_text("Download").click()
-download_info.value.save_as("file.pdf")
-```
+Wrap the download-triggering action with `page.expect_download()`.
 
 ### 11. How do you save authentication state?
 
-After logging in, call `context.storage_state(path="auth_state.json")` and reuse that file in future contexts.
+After login, call `context.storage_state(path="auth_state.json")` and reuse the file in future contexts.
 
-### 12. What is the Page Object Model?
+### 12. What is Page Object Model?
 
-Page Object Model is a design pattern that stores page locators and page actions in classes. Tests call page methods instead of repeating selectors.
+POM is a design pattern that stores locators and page behavior inside page classes.
 
 ### 13. How does Pytest integrate with Playwright?
 
-Pytest runs the tests, while Playwright controls the browser. With `pytest-playwright`, tests can use fixtures such as `page`, `browser`, and `context` directly.
+Pytest runs the tests, while Playwright controls browser behavior. `pytest-playwright` provides browser fixtures.
 
 ### 14. What is a Pytest fixture?
 
-A fixture is reusable setup/teardown logic. Fixtures can create test data, pages, contexts, API clients, or authenticated sessions.
-
-```python
-@pytest.fixture
-def base_url():
-    return "https://example.com"
-```
+A fixture is reusable setup/teardown logic used by tests.
 
 ### 15. How do you perform API testing in Playwright?
 
-Use `playwright.request.new_context()` to create an API request context.
-
-```python
-api = playwright.request.new_context(base_url="https://api.example.com")
-response = api.get("/users")
-assert response.ok
-```
+Use `playwright.request.new_context()` to create an API client.
 
 ### 16. How do you intercept network requests?
 
 Use `page.route()` to continue, abort, or fulfill matching requests.
 
-```python
-page.route("**/*.png", lambda route: route.abort())
-```
-
 ### 17. How do you mock an API response?
 
-Use `route.fulfill()`.
-
-```python
-page.route("**/api/user", lambda route: route.fulfill(status=200, body='{"name":"Brian"}'))
-```
+Use `route.fulfill()` to provide a custom response.
 
 ### 18. How do you run Playwright tests in CI?
 
-Install dependencies, install Playwright browsers, and run Pytest in a CI workflow such as GitHub Actions.
-
-```yaml
-- run: pip install pytest playwright pytest-playwright
-- run: playwright install --with-deps
-- run: pytest
-```
+Install dependencies, install Playwright browsers, and run Pytest inside the CI workflow.
 
 ### 19. How do you debug flaky Playwright tests?
 
-Use headed mode, slow motion, screenshots, videos, traces, console logs, network logs, and better web-first assertions. Avoid fixed sleeps unless there is no better synchronization point.
+Use headed mode, slow motion, screenshots, videos, traces, console logs, network logs, and web-first assertions.
 
 ### 20. What is data-driven testing?
 
 Data-driven testing runs the same test logic with multiple input values and expected results.
 
-```python
-@pytest.mark.parametrize("value", ["a", "b", "c"])
-def test_values(value):
-    assert value in ["a", "b", "c"]
-```
-
 ---
 
-## 28. Best Practices and Troubleshooting
+## 37. Best Practices and Troubleshooting
 
 ### Best Practices
 
@@ -1073,7 +1287,7 @@ def test_values(value):
 
 ---
 
-## 29. Author
+## 38. Author
 
 **Brian McCarthy**  
 Playwright Automation with Python and Pytest Showcase
